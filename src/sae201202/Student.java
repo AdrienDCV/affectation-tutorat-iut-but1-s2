@@ -6,16 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+<<<<<<< HEAD
 /**
  * 
  * @authors adrien.dacostaveiga & adrien.degand
  *
  */
+=======
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
 public class Student extends Person {
 	// class attributes
 	private int scholarYear;
 	private char group;
 	private String studentID;
+<<<<<<< HEAD
 	private Map<Subject,Double> grades;
 	private Motivation motivation;
 	private int absence;
@@ -38,12 +42,23 @@ public class Student extends Person {
 	 */
 	// constructor(s)
 	public Student (String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation, int absence, boolean acceptsSeveralTutored, Map<Subject, Double> grades) {
+=======
+	private Map<String,Double> grades;
+	private Motivation motivation;
+	private int absence;
+	private boolean priority;	
+	private int score = 0;
+	
+	// constructor(s)
+	public Student (String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation, int absence, Map<String, Double> grades) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
 		super(name, forename, age, mail);
 		this.setScholarYear(scholarYear);
 		this.group = group;
 		this.studentID = studentID;
 		this.motivation = motivation;
 		this.absence = absence;
+<<<<<<< HEAD
 		this.acceptsSeveralTutored = acceptsSeveralTutored;
 		this.grades = grades;
 	
@@ -65,6 +80,28 @@ public class Student extends Person {
 	}
 	public Student (String name, String forename, int age, String mail) {
 		this(name, forename, age, mail,0,'-',"---",Motivation.UNKNOWN, 0, false, new HashMap<Subject,Double>());
+=======
+		this.grades = grades;
+	
+	}
+	public Student (String name, String forename, int age, String mail, int scholarYear, char group, String studentID, int absence, Motivation motivation) {
+		this(name, forename, age, mail, scholarYear,group,studentID, motivation, absence, new HashMap<String,Double>());
+	}
+	public Student (String name, String forename, int age, String mail, int scholarYear, char group, String studentID, int absence) {
+		this(name, forename, age, mail, scholarYear,group,studentID, Motivation.UNKNOWN, absence, new HashMap<String,Double>());
+	}
+	public Student (String name, String forename, int age, String mail, int scholarYear, char group, String studentID) {
+		this(name, forename, age, mail, scholarYear,group,studentID, Motivation.UNKNOWN, 0,new HashMap<String,Double>());
+	}
+	public Student (String name, String forename, int age, String mail, int scholarYear, char group) {
+		this(name, forename, age, mail, scholarYear,group,"---", Motivation.UNKNOWN, 0, new HashMap<String,Double>());
+	}
+	public Student (String name, String forename, int age, String mail, int scholarYear) {
+		this(name, forename, age, mail, scholarYear,'-',"---", Motivation.UNKNOWN, 0, new HashMap<String,Double>());
+	}
+	public Student (String name, String forename, int age, String mail) {
+		this(name, forename, age, mail,0,'-',"---",Motivation.UNKNOWN, 0, new HashMap<String,Double>());
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
 	}
 	
 	// methods
@@ -95,6 +132,7 @@ public class Student extends Person {
 		this.studentID = studentID;
 	}
 	
+<<<<<<< HEAD
 	public Map<Subject, Double> getGrades() {
 		return grades;
 	}
@@ -114,6 +152,19 @@ public class Student extends Person {
 	public ArrayList<Subject> getSubject() {
 		ArrayList<Subject> result = new ArrayList<Subject>();
 		for (Subject key : grades.keySet() ) {
+=======
+	public Map<String, Double> getGrades() {
+		return grades;
+	}
+	
+	public double getGrade(String mat) {
+		return this.grades.get(mat);
+	}
+	
+	public ArrayList<String> getSubject() {
+		ArrayList<String> result = new ArrayList<String>();
+		for (String key : grades.keySet() ) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
 		    result.add(key);
 		}
 		return result;
@@ -146,7 +197,11 @@ public class Student extends Person {
 	
 	public boolean isUnderEight () {
 		boolean result = false;
+<<<<<<< HEAD
 		for (Map.Entry<Subject, Double> g : this.grades.entrySet()) {
+=======
+		for (Map.Entry<String, Double> g : this.grades.entrySet()) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
 			if (g.getValue() <= 8.0) {
 				result = true;
 			}
@@ -156,7 +211,11 @@ public class Student extends Person {
 	
 	public boolean isAboveSixteen () {
 		boolean result = false;
+<<<<<<< HEAD
 		for (Map.Entry<Subject, Double> g : this.grades.entrySet()) {
+=======
+		for (Map.Entry<String, Double> g : this.grades.entrySet()) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
 			if (g.getValue() >= 16.0) {
 				result = true;
 			}
@@ -164,15 +223,23 @@ public class Student extends Person {
 		return result;
 	}
 	
+<<<<<<< HEAD
 	public Subject highestGrade () {
 		double max = 0.0;
 		Subject result = null;
 		for (Map.Entry<Subject, Double> g : this.grades.entrySet()) {
+=======
+	public String highestGrade () {
+		double max = 0.0;
+		String result = "";
+		for (Map.Entry<String, Double> g : this.grades.entrySet()) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
 			if (g.getValue() > max) {
 				max = g.getValue();
 				result = g.getKey();
 			}
 		}
+<<<<<<< HEAD
 		return result; 
 	}
 	
@@ -196,21 +263,53 @@ public class Student extends Person {
 			this.priority = true;
 		}
 		if (this.isFirstYear() && this.grades.get(lowestGrade()) <= 8.00) {
+=======
+		return result;
+	}
+	
+	public double calculMoyenne() {
+		double total = 0.00;
+		for (Map.Entry<String, Double> g : this.grades.entrySet()) {
+			total += g.getValue();
+		}
+		return total / this.grades.size();
+	}
+
+	public void isPrioritary() {
+		if (this.isThirdYear() && this.calculMoyenne() >= 16.00) {
+			this.priority = true;
+		} else if (this.isThirdYear() && (this.calculMoyenne() < 16.00 && this.calculMoyenne() >= 12.00) && this.motivation == Motivation.HIGH_MOTIVATION ) {
+			this.priority = true;
+		}
+		if (this.isFirstYear() && this.calculMoyenne() <= 8.00) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
 			this.priority = true;
 		}
 	}	
 
+<<<<<<< HEAD
     public int bonusMalusFirstYear(Subject subject) {
+=======
+    public int bonusMalusFirstYear(String mat) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
         int result = 0;
         //bonus note
         if (grades.isEmpty()) {
         	System.out.println("il est vide.");
             result = -1000;
+<<<<<<< HEAD
         } else if (grades.get(subject) < 8.0) {
             result += 5;
         } else if (grades.get(subject) > 8.0 && grades.get(subject) <= 12.0) {
             result += 3;
         } else if (grades.get(subject) > 12.0 && grades.get(subject) <= 14.0) {
+=======
+        } else if (grades.get(mat) < 8.0) {
+            result += 5;
+        } else if (grades.get(mat) > 8.0 && grades.get(mat) <= 12.0) {
+            result += 3;
+        } else if (grades.get(mat) > 12.0 && grades.get(mat) <= 14.0) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
             result += 1;
         }
        
@@ -239,17 +338,30 @@ public class Student extends Person {
     
     
     
+<<<<<<< HEAD
     public int bonusMalusThirdYear(Subject subject) {
+=======
+    public int bonusMalusThirdYear(String mat) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
         int result = 0;
         //bonus moyenne
         if (grades.isEmpty()) {
             result = -1000;
+<<<<<<< HEAD
         } else if (grades.get(subject) > 14.0) {
             result += 5;
         } else if (grades.get(subject) > 12.0 && grades.get(subject) <= 14.0) {
             result += 3;
         }
         else if (grades.get(subject) > 8.0 && grades.get(subject) <= 12.0) {
+=======
+        } else if (grades.get(mat) > 14.0) {
+            result += 5;
+        } else if (grades.get(mat) > 12.0 && grades.get(mat) <= 14.0) {
+            result += 3;
+        }
+        else if (grades.get(mat) > 8.0 && grades.get(mat) <= 12.0) {
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
             result += 1;
         }
        
@@ -276,10 +388,17 @@ public class Student extends Person {
         return result;
     }
 	
+<<<<<<< HEAD
 	public int calculPoid(Student s2, Subject subject) {
         //on part du principe que cette fonction s'execute depuis un élève de 1ère année
         int s1Score = this.bonusMalusFirstYear(subject);
         int s2Score = s2.bonusMalusThirdYear(subject);
+=======
+	public int calculPoid(Student s2, String mat) {
+        //on part du principe que cette fonction s'execute depuis un élève de 1ère année
+        int s1Score = this.bonusMalusFirstYear(mat);
+        int s2Score = s2.bonusMalusThirdYear(mat);
+>>>>>>> b230cf6356b4d6e65f1af69a8162e277a2baa2f9
         return Math.abs(s1Score - s2Score);
     }
 
