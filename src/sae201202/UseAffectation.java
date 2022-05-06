@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.ulille.but.sae2_02.graphes.Arete;
 import fr.ulille.but.sae2_02.graphes.CalculAffectation;
 
 /**
@@ -51,7 +52,8 @@ public class UseAffectation {
 		
 		
 		List<Student> studentList = new ArrayList<Student>();
-		List<Student> forcedAssignment = new ArrayList<Student>();
+		List<Student> botAffectation = new ArrayList<Student>();
+		List<Student> severalAffectation = new ArrayList<Student>();
 		studentList.add(Claude);
 		studentList.add(Madeleine);
 		studentList.add(Sabine);
@@ -62,13 +64,13 @@ public class UseAffectation {
 		studentList.add(Sophie);		
 		
 		Affectation A = new Affectation();
+		//affectation plusieurs tutorant pour un 3e année
+		Affectation B = new Affectation();
+		//affectation forcé
 		Affectation Forced = new Affectation();
 		
 		
-		A.fillStudentsLists(studentList);
-		A.fillMissingStudents();
-		A.unionStudentLists(studentList);
-		A.triFirstYear();
+		A.doAffectation(studentList);
 		
 		Forced.affectationForce(Claude, Paul, A, studentList);
 
@@ -82,5 +84,39 @@ public class UseAffectation {
 		System.out.println(calcul.getAffectation());
 		System.out.println(calcul2.getCout());
 		System.out.println(calcul2.getAffectation());
+		
+		
+		B = A;
+		B.setCalcul(calcul);
+		
+		List<Arete<Student>> listeArete = new ArrayList<Arete<Student>>();
+		do {
+			botAffectation.clear();
+			severalAffectation.clear();
+			Affectation C = new Affectation();
+			
+			botAffectation = B.getBotAffectation(B.getCalcul());
+			severalAffectation = A.getSeveralTutored(botAffectation);
+			studentList.clear();
+			studentList.addAll(botAffectation);
+			studentList.addAll(severalAffectation);
+			
+			C.doAffectation(studentList);
+			
+			C.addNodes(studentList);
+			C.addEdges();
+			
+			CalculAffectation<Student> calcul3 = new CalculAffectation<Student>(C.graphe, C.getFirstYear(), C.getThirdSecondYear());
+			System.out.println(calcul3.getCout());
+			System.out.println(calcul3.getAffectation());
+			listeArete.addAll(C.getListArete(calcul3));
+			B = C;
+			B.setCalcul(calcul3);
+		} while(B.haveBot());
+		
+		listeArete.addAll(A.getListArete(calcul));
+		listeArete.addAll(Forced.getListArete(calcul2));
+		System.out.println(listeArete);
+
 	}
 }

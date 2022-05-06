@@ -1,6 +1,7 @@
 package sae201202;
 
 import fr.ulille.but.sae2_02.*;
+import fr.ulille.but.sae2_02.graphes.Arete;
 import fr.ulille.but.sae2_02.graphes.CalculAffectation;
 import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
 
@@ -13,7 +14,7 @@ import java.util.*;
  */
 public class Affectation {
 	// class attributes
-	private CalculAffectation c;
+	private CalculAffectation<Student> c;
 	private List<Student> firstYear;
 	private List<Student> thirdSecondYear;
 	GrapheNonOrienteValue<Student> graphe;
@@ -232,5 +233,65 @@ public class Affectation {
     	//on remplace firstyear par la liste trié
     	firstYear = tri;
     }
+    
+    
+    public List<Student> getBotAffectation(CalculAffectation<Student> c) {
+    	List<Student> result = new ArrayList<Student>();
+    	for (int i = 0 ; i < c.getAffectation().size(); i = i+1) {
+    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && c.getAffectation().get(i).getExtremite2().getName().equals("XXX")) {
+    			result.add(c.getAffectation().get(i).getExtremite1());
+    		}
+    	}
+    	return result;
+    }
+    
+    public List<Student> getSeveralTutored(List<Student> botAffectation) {
+    	List<Student> result = new ArrayList<Student>();
+    	for(int i = 0; i < graphe.sommets().size(); i ++) {
+    		if (graphe.sommets().get(i).isThirdYear() && graphe.sommets().get(i).getSeveralTutored()) {
+    			if(result.size() < botAffectation.size()) {
+    				result.add(graphe.sommets().get(i));
+    			}
+    		}
+    	}
+    	return result;
+    }
+    
+    public void doAffectation(List<Student> studentList) {
+    	this.fillStudentsLists(studentList);
+		this.fillMissingStudents();
+		this.unionStudentLists(studentList);
+		this.triFirstYear();
+    	
+    }
+    
+    public boolean haveBot() {
+    	for(int i = 0; i < graphe.sommets().size(); i ++) {
+    		if (graphe.sommets().get(i).getName().equals("XXX")) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    public void setCalcul(CalculAffectation<Student> c) {
+    	this.c = c;
+    }
+    
+    public CalculAffectation<Student> getCalcul() {
+    	return this.c;
+    }
+    
+    public List<Arete<Student>> getListArete(CalculAffectation<Student> c) {
+    	List<Arete<Student>> result = new ArrayList<Arete<Student>>();
+    	for (int i = 0 ; i < c.getAffectation().size(); i = i+1) {
+    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && !(c.getAffectation().get(i).getExtremite2().getName().equals("XXX"))) {
+    			result.add(graphe.getArete(c.getAffectation().get(i).getExtremite1(), c.getAffectation().get(i).getExtremite2()));
+    		}
+    	}
+    	
+    	return result;
+    }
+  
 }
 	
