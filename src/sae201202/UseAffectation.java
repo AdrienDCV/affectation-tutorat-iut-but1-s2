@@ -30,7 +30,7 @@ public class UseAffectation {
 		Sabine.getGrades().put(Subject.ALGO, 12.7);
 		
 		Map<Subject, Double> Hgrades = new HashMap<Subject,Double>();
-		Student Honore = new FirstYearStudent("Martel", "HonorÃ©", 19, "honorÃ©.martel.etu@univ-lille.fr", 1, 'D', "01121405", Motivation.LOW_MOTIVATION, 1, Hgrades);
+		Student Honore = new FirstYearStudent("Martel", "Honoré", 19, "honoré.martel.etu@univ-lille.fr", 1, 'D', "01121405", Motivation.LOW_MOTIVATION, 1, Hgrades);
 		Honore.getGrades().put(Subject.ALGO, 11.7);
 		
 		Map<Subject, Double> Agrades = new HashMap<Subject,Double>();
@@ -50,10 +50,17 @@ public class UseAffectation {
 		Student Sophie = new SecondYearStudent("Vallee", "Sophie", 19, "---", 2, 'G', "02091945", Motivation.HIGH_MOTIVATION, 0, SOgrades);
 		Sophie.getGrades().put(Subject.ALGO, 15.8);
 		
+		Map<Subject, Double> Lgrades = new HashMap<Subject,Double>();
+		Student Laure = new SecondYearStudent("Martin", "Laure", 19, "---", 2, 'G', "86475325", Motivation.AVERAGE_MOTIVATION, 0, Lgrades);
+		Laure.getGrades().put(Subject.ALGO, 14.3);
 		
+		
+		//création des listes de student
 		List<Student> studentList = new ArrayList<Student>();
 		List<Student> botAffectation = new ArrayList<Student>();
 		List<Student> severalAffectation = new ArrayList<Student>();
+		
+		//ajout des étudiants dans la liste student principale
 		studentList.add(Claude);
 		studentList.add(Madeleine);
 		studentList.add(Sabine);
@@ -61,34 +68,36 @@ public class UseAffectation {
 		studentList.add(Aurore);
 		studentList.add(Paul);
 		studentList.add(Daniel);
-		studentList.add(Sophie);		
+		studentList.add(Sophie);
+		studentList.add(Laure);	
 		
+		//création des affecations
 		Affectation A = new Affectation();
-		//affectation plusieurs tutorant pour un 3e annÃ©e
+		//affectation plusieurs tutorant pour un 3e année
 		Affectation B = new Affectation();
-		//affectation forcÃ©
+		//affectation forcé
 		Affectation Forced = new Affectation();
 		
+		//création de l'affecation : remplissant différente liste/ ajout de "bot" si nécessaire / tri des listes
+		A.prepaList(studentList);
 		
-		A.doAffectation(studentList);
-		
+		//on force l'affectation de ces deux élèves
 		Forced.affectationForce(Claude, Paul, A, studentList);
 
+		//ajout des sommets / arete
 		A.addNodes(studentList);
 		A.addEdges();
 		
+		//calcul d'affectation
 		CalculAffectation<Student> calcul = new CalculAffectation<Student>(A.graphe, A.getFirstYear(), A.getThirdSecondYear());
+		//calcul affectation forcé
 		CalculAffectation<Student> calcul2 = new CalculAffectation<Student>(Forced.graphe, Forced.getFirstYear(), Forced.getThirdSecondYear());
 		
-		System.out.println(calcul.getCout());
-		System.out.println(calcul.getAffectation());
-		System.out.println(calcul2.getCout());
-		System.out.println(calcul2.getAffectation());
 		
-		
+		//boucle des 3e années à plusieurs affectation
 		B = A;
 		B.setCalcul(calcul);
-		
+		//liste contenant les arêtes à plusieurs affectation
 		List<Arete<Student>> listeArete = new ArrayList<Arete<Student>>();
 		do {
 			botAffectation.clear();
@@ -98,24 +107,24 @@ public class UseAffectation {
 			botAffectation = B.getBotAffectation(B.getCalcul());
 			severalAffectation = A.getSeveralTutored(botAffectation);
 			studentList.clear();
+			//ajout des élèves de 1A ayant des affectations avec des bots
 			studentList.addAll(botAffectation);
+			//ajout des 3A ayant plusieurs affectation
 			studentList.addAll(severalAffectation);
 			
-			C.doAffectation(studentList);
+			C.prepaList(studentList);
 			
 			C.addNodes(studentList);
 			C.addEdges();
 			
 			CalculAffectation<Student> calcul3 = new CalculAffectation<Student>(C.graphe, C.getFirstYear(), C.getThirdSecondYear());
-			System.out.println(calcul3.getCout());
-			System.out.println(calcul3.getAffectation());
 			listeArete.addAll(C.getListArete(calcul3));
 			B = C;
 			B.setCalcul(calcul3);
 		} while(B.haveBot());
 		
-		listeArete.addAll(A.getListArete(calcul));
-		listeArete.addAll(Forced.getListArete(calcul2));
+		System.out.println(calcul.getAffectation());
+		System.out.println(calcul2.getAffectation());
 		System.out.println(listeArete);
 
 	}

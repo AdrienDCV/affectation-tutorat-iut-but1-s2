@@ -6,5 +6,6 @@ package sae201202;
  *
  */
 public enum Motivation {
+	//motivation des étudiants
 	HIGH_MOTIVATION, AVERAGE_MOTIVATION, LOW_MOTIVATION, NO_MOTIVATION, UNKNOWN
 }

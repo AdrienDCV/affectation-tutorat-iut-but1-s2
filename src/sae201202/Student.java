@@ -50,6 +50,19 @@ public class Student extends Person {
 		this.grades = grades;
 	
 	}
+	/**
+	 * 
+	 * @param name
+	 * @param forename
+	 * @param age
+	 * @param mail
+	 * @param schoolYear
+	 * @param group
+	 * @param studentID
+	 * @param motivation
+	 * @param absence
+	 * @param acceptsSeveralTutored
+	 */
 	public Student(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation, int absence, boolean acceptsSeveralTutored) {
 		this(name, forename, age, mail, schoolYear, group, studentID, motivation, absence, acceptsSeveralTutored, new HashMap<Subject, Double>());
 	}
@@ -80,14 +93,14 @@ public class Student extends Person {
 	
 	// methods
 	/**
-	 * 
+	 * Retourne l'objet Student sous la forme : "nom, prénom, age, mail, Id_étudiant, année d'étude, groupe, notes, motivation"
 	 */
 	public String toString() {
 		return super.toString() + ", " + studentID + ", " + scholarYear + ", " + group + ", " + grades +  ", " + motivation;
 	}
 	
 	/**
-	 * 
+	 * Retourne l'attribut ScholarYear
 	 * TODO
 	 * @return
 	 */
@@ -96,7 +109,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Change l'attribut ScholarYear
 	 * TODO
 	 * @param scholarYear
 	 */
@@ -105,7 +118,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne l'attribut Group
 	 * TODO
 	 * @return
 	 */
@@ -114,7 +127,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Change l'attribut Group
 	 * TODO
 	 * @param group
 	 */
@@ -123,7 +136,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne l'attribut StudentID
 	 * TODO
 	 * @return
 	 */
@@ -132,7 +145,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Change l'attribut StudentID
 	 * TODO
 	 * @param studentID
 	 */
@@ -141,7 +154,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne la liste Grades
 	 * TODO
 	 * @return
 	 */
@@ -149,18 +162,10 @@ public class Student extends Person {
 		return grades;
 	}
 	
-	/**
-	 * 
-	 * TODO
-	 * @param subject
-	 * @return
-	 */
-	public double getGrade(Subject subject) {
-		return this.grades.get(subject);
-	}
+	
 	
 	/**
-	 * 
+	 * Retourne l'attribut SeveralTutored
 	 * TODO
 	 * @return
 	 */
@@ -169,7 +174,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Change l'attribut SeveralTutored
 	 * TODO
 	 * @param severalTutored
 	 */
@@ -178,7 +183,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne une liste des sujets des notes
 	 * TODO
 	 * @return
 	 */
@@ -190,18 +195,19 @@ public class Student extends Person {
 		return result;
 	}
 	
+	
 	/**
-	 * 
+	 * Retourne la/les notes en fonction de l'objet matière
 	 * TODO
-	 * @param mat
+	 * @param subject
 	 * @return
 	 */
-	public double getGrade(String mat) {
-		return this.grades.get(mat);
+	public double getGrade(Subject subject) {
+		return this.grades.get(subject);
 	}
 	
 	/**
-	 * 
+	 * Retourne l'attribut Motivation
 	 * TODO
 	 * @return
 	 */
@@ -210,7 +216,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Change l'attribut Motivation
 	 * TODO
 	 * @param motivation
 	 */
@@ -219,7 +225,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne l'attribut Absence
 	 * TODO
 	 * @return
 	 */
@@ -228,7 +234,7 @@ public class Student extends Person {
 	}
 
 	/**
-	 * 
+	 * Retourne True si l'année de Student est 1
 	 * TODO
 	 * @return
 	 */
@@ -237,7 +243,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne True si l'année de Student est 2
 	 * TODO
 	 * @return
 	 */
@@ -246,7 +252,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne True si l'année de Student est 3
 	 * TODO
 	 * @return
 	 */
@@ -254,38 +260,9 @@ public class Student extends Person {
 		return this.scholarYear==3;
 	} 
 	
-	/**
-	 * 
-	 * TODO
-	 * @return
-	 */
-	public boolean isUnderEight () {
-		boolean result = false;
-		for (Entry<Subject, Double> g : this.grades.entrySet()) {
-			if (g.getValue() <= 8.0) {
-				result = true;
-			}
-		}
-		return result;
-	}
 	
 	/**
-	 * 
-	 * TODO
-	 * @return
-	 */
-	public boolean isAboveSixteen () {
-		boolean result = false;
-		for (Map.Entry<Subject, Double> g : this.grades.entrySet()) {
-			if (g.getValue() >= 16.0) {
-				result = true;
-			}
-		}
-		return result;
-	}
-	
-	/**
-	 * 
+	 * Retourne la matière de la note la plus haute
 	 * TODO
 	 * @return
 	 */
@@ -302,7 +279,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne la note de la plus petite note
 	 * TODO
 	 * @return
 	 */
@@ -319,7 +296,7 @@ public class Student extends Person {
 	}
 
 	/**
-	 * 
+	 * Retourne le score de l'étudiant première année en fonction de la matière
 	 * TODO
 	 * @param subject
 	 * @return
@@ -361,7 +338,7 @@ public class Student extends Person {
     }
     
     /**
-     * 
+     * Retourne le score de l'étudiant troisième année en fonction de la matière
      * TODO
      * @param subject
      * @return
@@ -404,7 +381,7 @@ public class Student extends Person {
     }
 	
     /**
-     * 
+     * Calcul le poid de l'étudiant avec l'étudiant 2
      * TODO
      * @param s2
      * @param subject

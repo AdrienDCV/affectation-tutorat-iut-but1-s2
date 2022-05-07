@@ -15,9 +15,9 @@ import java.util.*;
 public class Affectation {
 	// class attributes
 	private CalculAffectation<Student> c;
+	GrapheNonOrienteValue<Student> graphe;
 	private List<Student> firstYear;
 	private List<Student> thirdSecondYear;
-	GrapheNonOrienteValue<Student> graphe;
 	private List<Student> forcedAssignment;
 	
 	
@@ -35,7 +35,7 @@ public class Affectation {
 	
 	// methods
 	/**
-	 * 
+	 * Retourne la liste des premières années
 	 * TODO
 	 * @return
 	 */
@@ -44,7 +44,7 @@ public class Affectation {
 	}
 	
 	/**
-	 * 
+	 * Retourne la liste des troisièmes années
 	 * TODO
 	 * @return
 	 */
@@ -53,7 +53,22 @@ public class Affectation {
 	}
 	
 	/**
-	 * 
+     * Change l'attribut Calcul
+     * @param c
+     */
+    public void setCalcul(CalculAffectation<Student> c) {
+    	this.c = c;
+    }
+	
+    /**
+     * Retourne l'attribut Calcul
+     * @return
+     */
+    public CalculAffectation<Student> getCalcul() {
+    	return this.c;
+    }
+	/**
+	 * Ajout des étudiants contenu dans la student liste dans les listes de la classes respective
 	 * TODO
 	 * @param studentList
 	 */
@@ -70,7 +85,7 @@ public class Affectation {
 	}
 	
 	/**
-	 * 
+	 * Retourne la taille de la plus grande liste entre les premières années et les deuxièmes/troisièmes années
 	 * TODO
 	 * @return
 	 */
@@ -79,15 +94,17 @@ public class Affectation {
 	}
 	
 	/**
-	 * 
+	 * Ajoute des étudiants fictif dans la liste la plus petite
 	 * TODO
 	 */
 	public void fillMissingStudents() {
+		//ajout des bots dans la liste des 1A
 		if(firstYear.size() != mostPopulated()) {
 			for(int i=firstYear.size(); i<mostPopulated(); i++) {
 				firstYear.add(new FirstYearStudent("X", "---", 0, "---", 0, '-', "---", Motivation.UNKNOWN, 1000));
 			}
-		} 
+		}
+		//ajout des bots dans la liste des 3A
 		if (thirdSecondYear.size() != mostPopulated()) {
 			for(int i=thirdSecondYear.size(); i<mostPopulated(); i++) {
 				thirdSecondYear.add(new ThirdYearStudent("XXX", "---", 0, "---", 0, '-', "---", Motivation.UNKNOWN, 1000));
@@ -96,21 +113,23 @@ public class Affectation {
 	}
 	
 	/**
-	 * 
+	 * Ajoute les les premières années et les deuxièmes/troisièmes années dans une liste
 	 * TODO
 	 * @param studentList
 	 */
 	public void unionStudentLists(List<Student> studentList) {  
+		//ajoute les 1A et les 2A/3A dans la liste en paramètre
         studentList.addAll(firstYear);
         studentList.addAll(thirdSecondYear);
     }
 
 	/**
-	 * 
+	 * Ajoute les sommets des étudiants de la liste
 	 * TODO
 	 * @param studentList
 	 */
 	public void addNodes(List<Student> studentList) {
+		//création des sommets
 		for (int i=0; i<studentList.size(); i++) {
 			graphe.ajouterSommet(studentList.get(i));
 		}
@@ -118,21 +137,17 @@ public class Affectation {
     
 	
 	/**
-	 * 
+	 * Ajoute les aretes dans le graphe
 	 * TODO
 	 */
     public void addEdges() {
+    	//création des aretes
         for(int i = 0; i < firstYear.size(); i ++) {
             for(int j = 0; j < thirdSecondYear.size(); j ++) {
-            	/*if (this.forcedAssignment.containsKey(firstYear.get(i))) {
-            		if(this.forcedAssignment.get(firstYear.get(i)).equals(thirdSecondYear.get(j))) {
-            			j = j + 1;
-            		}
-            	}*/
             	for(int k= 0; k < firstYear.get(i).getSubject().size(); k ++) {
                     graphe.ajouterArete(firstYear.get(i), thirdSecondYear.get(j), firstYear.get(i).calculPoid(thirdSecondYear.get(j), firstYear.get(i).getSubject().get(k)));
-                    System.out.println(firstYear.get(i).getName() + " -> " + thirdSecondYear.get(j).getName());
-                    System.out.println(firstYear.get(i).calculPoid(thirdSecondYear.get(j), firstYear.get(i).getSubject().get(k)));
+                    //System.out.println(firstYear.get(i).getName() + " -> " + thirdSecondYear.get(j).getName());
+                    //System.out.println(firstYear.get(i).calculPoid(thirdSecondYear.get(j), firstYear.get(i).getSubject().get(k)));
             	}
             }
         }
@@ -140,7 +155,7 @@ public class Affectation {
     }
     
     /**
-     * 
+     * Vérifie si l'étudiant 1 et l'étudiant 2 sont une arete
      * TODO
      * @param s1
      * @param s2
@@ -151,7 +166,7 @@ public class Affectation {
     }
     
     /**
-     * 
+     * Force l'affectation de l'étudiant 1 et l'étudiant 2
      * TODO
      * @param s1
      * @param s2
@@ -160,19 +175,23 @@ public class Affectation {
      * @return
      */
     public boolean affectationForce(Student s1, Student s2, Affectation A, List <Student> studentList) {
-    	//Force une affectation, true si rÃ©ussie false sinon
+    	//Force une affectation, true si réussie false sinon
     	if (!this.isEdge(s1, s2)) {
+    		//on enlève le 1A / 3A des listes pour l'affecter dans la liste des affectations forcé
     		A.firstYear.remove(s1);
         	A.thirdSecondYear.remove(s2);
         	forcedAssignment.add(s1);
         	forcedAssignment.add(s2);
         	
+        	//on les enlève de la liste des étudiants à affecter normalement
         	studentList.removeAll(forcedAssignment);
+        	
+        	//création de l'arete forcé
         	this.fillStudentsLists(forcedAssignment);
     		this.addNodes(forcedAssignment);
     		graphe.ajouterArete(forcedAssignment.get(0),forcedAssignment.get(1), Integer.MAX_VALUE);
-    		System.out.println(forcedAssignment.get(0).getName() + " -> " + forcedAssignment.get(1).getName());
-    		System.out.println(graphe.getPoids(forcedAssignment.get(0), forcedAssignment.get(1)));
+    		//System.out.println(forcedAssignment.get(0).getName() + " -> " + forcedAssignment.get(1).getName());
+    		//System.out.println(graphe.getPoids(forcedAssignment.get(0), forcedAssignment.get(1)));
     		
     		return true;
     	}
@@ -181,13 +200,12 @@ public class Affectation {
     }
     
     /**
-     * 
+     * Retourne l'indice du plus petit nombre de la liste
      * TODO
      * @param l
      * @return
      */
     private int minIdxList(List<Integer> l) {
-    	//retourne l'indice du plus petit nombre de la liste
     	int result = l.get(0);
     	int idx = 0;
     	for(int i = 0; i < l.size(); i ++) {
@@ -200,11 +218,11 @@ public class Affectation {
     }
 
     /**
-     * 
+     * Tri la liste des premières années
      * TODO
      */
     public void triFirstYear() {
-    	//liste triÃ©
+    	//liste trié
     	List<Student> tri = new ArrayList<Student>();
     	//liste des plus petits poid de chaque firstyear
     	List<Integer> minPoid = new ArrayList<Integer>();
@@ -222,7 +240,7 @@ public class Affectation {
             Collections.sort(sortedList);
             minPoid.add(sortedList.get(0));
     	}
-    	//on cherche l'indice du int le plus petit et on le supprime de firstyear pour l'ajouter dans la liste triÃ©
+    	//on cherche l'indice du int le plus petit et on le supprime de firstyear pour l'ajouter dans la liste trié
     	int idx = 0;
     	while(firstYear.size() != 0) {
     		idx = this.minIdxList(minPoid);
@@ -230,21 +248,32 @@ public class Affectation {
     		minPoid.remove(idx);
     	}
     	
-    	//on remplace firstyear par la liste triÃ©
+    	//on remplace firstyear par la liste trié
     	firstYear = tri;
     }
     
-    
+    /**
+     * retourne la liste des étudiants qui ont une affectation avec un étudiant fictif
+     * @param c
+     * @return
+     */
     public List<Student> getBotAffectation(CalculAffectation<Student> c) {
     	List<Student> result = new ArrayList<Student>();
     	for (int i = 0 ; i < c.getAffectation().size(); i = i+1) {
     		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && c.getAffectation().get(i).getExtremite2().getName().equals("XXX")) {
     			result.add(c.getAffectation().get(i).getExtremite1());
+    		} else if (c.getAffectation().get(i).getExtremite2().isThirdYear() && c.getAffectation().get(i).getExtremite1().getName().equals("XXX")) {
+    			result.add(c.getAffectation().get(i).getExtremite2());
     		}
     	}
     	return result;
     }
     
+    /**
+     * retourne la liste des tuteurs qui accepte plusieurs affectation
+     * @param botAffectation
+     * @return
+     */
     public List<Student> getSeveralTutored(List<Student> botAffectation) {
     	List<Student> result = new ArrayList<Student>();
     	for(int i = 0; i < graphe.sommets().size(); i ++) {
@@ -256,15 +285,21 @@ public class Affectation {
     	}
     	return result;
     }
-    
-    public void doAffectation(List<Student> studentList) {
+    /**
+     * Initialise les listes
+     * @param studentList
+     */
+    public void prepaList(List<Student> studentList) {
     	this.fillStudentsLists(studentList);
 		this.fillMissingStudents();
 		this.unionStudentLists(studentList);
 		this.triFirstYear();
     	
     }
-    
+    /**
+     * Retourne true ou false si un graphe contient un bot
+     * @return
+     */
     public boolean haveBot() {
     	for(int i = 0; i < graphe.sommets().size(); i ++) {
     		if (graphe.sommets().get(i).getName().equals("XXX")) {
@@ -274,18 +309,18 @@ public class Affectation {
     	return false;
     }
     
-    public void setCalcul(CalculAffectation<Student> c) {
-    	this.c = c;
-    }
     
-    public CalculAffectation<Student> getCalcul() {
-    	return this.c;
-    }
     
+    /**
+     * Retourne une liste d'arete ne comprenant pas d'étudiant fictif
+     * @param c
+     * @return
+     */
     public List<Arete<Student>> getListArete(CalculAffectation<Student> c) {
     	List<Arete<Student>> result = new ArrayList<Arete<Student>>();
     	for (int i = 0 ; i < c.getAffectation().size(); i = i+1) {
     		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && !(c.getAffectation().get(i).getExtremite2().getName().equals("XXX"))) {
+    			//ajout des aretes qui ne comporte pas de bot
     			result.add(graphe.getArete(c.getAffectation().get(i).getExtremite1(), c.getAffectation().get(i).getExtremite2()));
     		}
     	}

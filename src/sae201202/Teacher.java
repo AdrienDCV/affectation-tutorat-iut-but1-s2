@@ -30,20 +30,24 @@ public class Teacher extends Person {
 
 	/**
 	 * 
-	 * 
+	 * Retourne l'attribut TeacherID
 	 * @return
 	 */
 	// Methods 
 	public String getTeacherID() {
 		return teacherID;
 	}
-
+	
+	/**
+	 * Change l'attribut TeacherID
+	 * @param teacherID
+	 */
 	public void setTeacherID(String teacherID) {
 		this.teacherID = teacherID;
 	}
 	/**
 	 * 
-	 * 
+	 * Retourne l'attribut Teaching
 	 * @return
 	 */
 	public String getTeaching() {
@@ -53,7 +57,7 @@ public class Teacher extends Person {
 
 	/**
 	 * 
-	 * 
+	 * Change l'attribut Teaching
 	 * @param teaching
 	 */
 	public void setTeaching(String teaching) {

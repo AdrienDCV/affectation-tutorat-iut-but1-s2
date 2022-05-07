@@ -36,6 +36,7 @@ public class FirstYearStudent extends Student {
 	public FirstYearStudent(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation, int absence, Map<Subject, Double> grades) {
 		this(name, forename, age, mail, schoolYear, group, studentID, motivation, absence, grades, null, null);
 	}
+
 	public FirstYearStudent(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation, int absence) {
 		this(name, forename, age, mail, schoolYear, group, studentID, motivation, absence, new HashMap<Subject,Double>(), null, null);
 	}

@@ -30,7 +30,7 @@ public class Person {
 	
 	// methods 
 	/**
-	 * 
+	 * Retourne l'attribut Name
 	 * TODO
 	 * @return
 	 */
@@ -39,7 +39,7 @@ public class Person {
 	}
 	
 	/**
-	 * 
+	 * Change l'attribut Name
 	 * TODO
 	 * @param name
 	 */
@@ -48,7 +48,7 @@ public class Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne l'attribut Forename
 	 * TODO
 	 * @return
 	 */
@@ -57,7 +57,7 @@ public class Person {
 	}
 	
 	/**
-	 * 
+	 * Change l'attribut Forename
 	 * TODO
 	 * @param forename
 	 */
@@ -66,7 +66,7 @@ public class Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne l'attribut Age
 	 * TODO
 	 * @return
 	 */
@@ -75,7 +75,7 @@ public class Person {
 	}
 	
 	/**
-	 * 
+	 * Change l'attribut Age
 	 * TODO
 	 * @param age
 	 */
@@ -84,7 +84,7 @@ public class Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne l'attribut Mail
 	 * TODO
 	 * @return
 	 */
@@ -93,7 +93,7 @@ public class Person {
 	}
 	
 	/**
-	 * 
+	 * Change l'attribut Mail
 	 * TODO
 	 * @param mail
 	 */
@@ -102,7 +102,7 @@ public class Person {
 	}
 	
 	/**
-	 * 
+	 * Retourne l'objet Person de la forme "nom, prénom, age, mail"
 	 */
 	public String toString() {
 		return name + ", " + forename + ", " + age + ", " + mail;
