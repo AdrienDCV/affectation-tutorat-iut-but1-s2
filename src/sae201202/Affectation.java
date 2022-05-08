@@ -37,7 +37,7 @@ public class Affectation {
 	/**
 	 * Retourne la liste des premières années
 	 * TODO
-	 * @return
+	 * @return la valeur de la liste firstYear
 	 */
 	public List<Student> getFirstYear() {
 		return firstYear;
@@ -46,7 +46,7 @@ public class Affectation {
 	/**
 	 * Retourne la liste des troisièmes années
 	 * TODO
-	 * @return
+	 * @return la valeur de la liste thirdYear
 	 */
 	public List<Student> getThirdSecondYear() {
 		return thirdSecondYear;
@@ -62,7 +62,7 @@ public class Affectation {
 	
     /**
      * Retourne l'attribut Calcul
-     * @return
+     * @return le calcul d'une affectation
      */
     public CalculAffectation<Student> getCalcul() {
     	return this.c;
@@ -87,7 +87,7 @@ public class Affectation {
 	/**
 	 * Retourne la taille de la plus grande liste entre les premières années et les deuxièmes/troisièmes années
 	 * TODO
-	 * @return
+	 * @return la liste la plus longue
 	 */
 	public int mostPopulated() {
 		return Math.max(firstYear.size(), thirdSecondYear.size());
@@ -146,8 +146,6 @@ public class Affectation {
             for(int j = 0; j < thirdSecondYear.size(); j ++) {
             	for(int k= 0; k < firstYear.get(i).getSubject().size(); k ++) {
                     graphe.ajouterArete(firstYear.get(i), thirdSecondYear.get(j), firstYear.get(i).calculPoid(thirdSecondYear.get(j), firstYear.get(i).getSubject().get(k)));
-                    //System.out.println(firstYear.get(i).getName() + " -> " + thirdSecondYear.get(j).getName());
-                    //System.out.println(firstYear.get(i).calculPoid(thirdSecondYear.get(j), firstYear.get(i).getSubject().get(k)));
             	}
             }
         }
@@ -159,7 +157,7 @@ public class Affectation {
      * TODO
      * @param s1
      * @param s2
-     * @return
+     * @return true si le graphe contient une arête liant s1 et s2 / false si le graphe ne contient pas d'arête liant s1 et s2 
      */
     private boolean isEdge(Student s1, Student s2) {
     	return graphe.contientArete(s1, s2);
@@ -172,7 +170,7 @@ public class Affectation {
      * @param s2
      * @param A
      * @param studentList
-     * @return
+     * @return true si l'affectation forcée a réussit / false si non
      */
     public boolean affectationForce(Student s1, Student s2, Affectation A, List <Student> studentList) {
     	//Force une affectation, true si réussie false sinon
@@ -189,10 +187,7 @@ public class Affectation {
         	//création de l'arete forcé
         	this.fillStudentsLists(forcedAssignment);
     		this.addNodes(forcedAssignment);
-    		graphe.ajouterArete(forcedAssignment.get(0),forcedAssignment.get(1), Integer.MAX_VALUE);
-    		//System.out.println(forcedAssignment.get(0).getName() + " -> " + forcedAssignment.get(1).getName());
-    		//System.out.println(graphe.getPoids(forcedAssignment.get(0), forcedAssignment.get(1)));
-    		
+    		graphe.ajouterArete(forcedAssignment.get(0),forcedAssignment.get(1), Integer.MAX_VALUE);		
     		return true;
     	}
     	
@@ -203,7 +198,7 @@ public class Affectation {
      * Retourne l'indice du plus petit nombre de la liste
      * TODO
      * @param l
-     * @return
+     * @return 
      */
     private int minIdxList(List<Integer> l) {
     	int result = l.get(0);
@@ -255,7 +250,7 @@ public class Affectation {
     /**
      * retourne la liste des étudiants qui ont une affectation avec un étudiant fictif
      * @param c
-     * @return
+     * @return la liste des FirstYeartStudent / ThirdYearStudent / SecondeYearStudent qui sont affectés à un faux profil d'étudiant 
      */
     public List<Student> getBotAffectation(CalculAffectation<Student> c) {
     	List<Student> result = new ArrayList<Student>();
@@ -270,9 +265,9 @@ public class Affectation {
     }
     
     /**
-     * retourne la liste des tuteurs qui accepte plusieurs affectation
+     * retourne la liste des tuteurs qui acceptent plusieurs FirstYearStudent
      * @param botAffectation
-     * @return
+     * @return la liste des ThirdYearStudent qui acceptent d'être tuteur de plus d'un FirstYearStudent
      */
     public List<Student> getSeveralTutored(List<Student> botAffectation) {
     	List<Student> result = new ArrayList<Student>();
@@ -298,7 +293,7 @@ public class Affectation {
     }
     /**
      * Retourne true ou false si un graphe contient un bot
-     * @return
+     * @return true ou false si un graphe contient un bot
      */
     public boolean haveBot() {
     	for(int i = 0; i < graphe.sommets().size(); i ++) {
@@ -309,12 +304,10 @@ public class Affectation {
     	return false;
     }
     
-    
-    
     /**
      * Retourne une liste d'arete ne comprenant pas d'étudiant fictif
      * @param c
-     * @return
+     * @return une liste d'arete ne comprenant pas d'étudiant fictif
      */
     public List<Arete<Student>> getListArete(CalculAffectation<Student> c) {
     	List<Arete<Student>> result = new ArrayList<Arete<Student>>();
@@ -329,4 +322,3 @@ public class Affectation {
     }
   
 }
-	

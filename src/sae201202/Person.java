@@ -30,9 +30,9 @@ public class Person {
 	
 	// methods 
 	/**
-	 * Retourne l'attribut Name
+	 * Retourne l'attribut name
 	 * TODO
-	 * @return
+	 * @return la valeur de l'attribut name
 	 */
 	public String getName() {
 		return name;
@@ -50,7 +50,7 @@ public class Person {
 	/**
 	 * Retourne l'attribut Forename
 	 * TODO
-	 * @return
+	 * @return la valeur de l'attribut forename
 	 */
 	public String getForename() {
 		return forename;
@@ -68,7 +68,7 @@ public class Person {
 	/**
 	 * Retourne l'attribut Age
 	 * TODO
-	 * @return
+	 * @return la valeur de l'attribut age
 	 */
 	public int getAge() {
 		return age;
@@ -86,7 +86,7 @@ public class Person {
 	/**
 	 * Retourne l'attribut Mail
 	 * TODO
-	 * @return
+	 * @return la valeur de l'attribut mail
 	 */
 	public String getMail() {
 		return mail;

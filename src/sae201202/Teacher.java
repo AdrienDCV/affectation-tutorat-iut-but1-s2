@@ -31,7 +31,7 @@ public class Teacher extends Person {
 	/**
 	 * 
 	 * Retourne l'attribut TeacherID
-	 * @return
+	 * @return la valeur de l'attribut teacherID
 	 */
 	// Methods 
 	public String getTeacherID() {
@@ -48,7 +48,7 @@ public class Teacher extends Person {
 	/**
 	 * 
 	 * Retourne l'attribut Teaching
-	 * @return
+	 * @return la valeur de l'attribut teaching
 	 */
 	public String getTeaching() {
 		return teaching;

@@ -102,7 +102,7 @@ public class Student extends Person {
 	/**
 	 * Retourne l'attribut ScholarYear
 	 * TODO
-	 * @return
+	 * @return la valeur de l'attribut scholarYear
 	 */
 	public int getScholarYear() {
 		return scholarYear;
@@ -120,7 +120,7 @@ public class Student extends Person {
 	/**
 	 * Retourne l'attribut Group
 	 * TODO
-	 * @return
+	 * @return la valeur de l'attribut group
 	 */
 	public char getGroup() {
 		return group;
@@ -138,7 +138,7 @@ public class Student extends Person {
 	/**
 	 * Retourne l'attribut StudentID
 	 * TODO
-	 * @return
+	 * @return la valeur de l'attribut studentID
 	 */
 	public String getStudentID() {
 		return studentID;
@@ -156,7 +156,7 @@ public class Student extends Person {
 	/**
 	 * Retourne la liste Grades
 	 * TODO
-	 * @return
+	 * @return la liste des notes d'un Student
 	 */
 	public Map<Subject, Double> getGrades() {
 		return grades;
@@ -167,7 +167,7 @@ public class Student extends Person {
 	/**
 	 * Retourne l'attribut SeveralTutored
 	 * TODO
-	 * @return
+	 * @return true / false
 	 */
 	public boolean getSeveralTutored() {
 		return this.acceptsSeveralTutored;
@@ -183,9 +183,9 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * Retourne une liste des sujets des notes
+	 * Retourne une liste des matières des notes
 	 * TODO
-	 * @return
+	 * @return une liste des matières (ressources)
 	 */
 	public ArrayList<Subject> getSubject() {
 		ArrayList<Subject> result = new ArrayList<Subject>();
@@ -200,7 +200,7 @@ public class Student extends Person {
 	 * Retourne la/les notes en fonction de l'objet matière
 	 * TODO
 	 * @param subject
-	 * @return
+	 * @return 
 	 */
 	public double getGrade(Subject subject) {
 		return this.grades.get(subject);
@@ -227,7 +227,7 @@ public class Student extends Person {
 	/**
 	 * Retourne l'attribut Absence
 	 * TODO
-	 * @return
+	 * @return la valeur de l'attribut absence
 	 */
 	public int getAbsence() {
 		return this.absence;
@@ -236,7 +236,7 @@ public class Student extends Person {
 	/**
 	 * Retourne True si l'année de Student est 1
 	 * TODO
-	 * @return
+	 * @return true / false
 	 */
 	public boolean isFirstYear () {
 		return this.scholarYear==1;
@@ -245,7 +245,7 @@ public class Student extends Person {
 	/**
 	 * Retourne True si l'année de Student est 2
 	 * TODO
-	 * @return
+	 * @return true / false
 	 */
 	public boolean isSecondYear () {
 		return this.scholarYear==2;
@@ -254,7 +254,7 @@ public class Student extends Person {
 	/**
 	 * Retourne True si l'année de Student est 3
 	 * TODO
-	 * @return
+	 * @return true / false
 	 */
 	public boolean isThirdYear () {
 		return this.scholarYear==3;
@@ -264,7 +264,7 @@ public class Student extends Person {
 	/**
 	 * Retourne la matière de la note la plus haute
 	 * TODO
-	 * @return
+	 * @return la matière de la note la plus haute
 	 */
 	public Subject highestGrade () {
 		double max = 0.0;
@@ -281,7 +281,7 @@ public class Student extends Person {
 	/**
 	 * Retourne la note de la plus petite note
 	 * TODO
-	 * @return
+	 * @return la matière de la note la plus petite
 	 */
 	public Subject lowestGrade () {
 		double min = Double.MAX_VALUE;
@@ -299,7 +299,7 @@ public class Student extends Person {
 	 * Retourne le score de l'étudiant première année en fonction de la matière
 	 * TODO
 	 * @param subject
-	 * @return
+	 * @return le score de FirstYearStudent
 	 */
     public int bonusMalusFirstYear(Subject subject) {
         int result = 0;
@@ -341,7 +341,7 @@ public class Student extends Person {
      * Retourne le score de l'étudiant troisième année en fonction de la matière
      * TODO
      * @param subject
-     * @return
+     * @return le score de SecondYearStudent / ThirdYearStudent
      */
     public int bonusMalusThirdYear(Subject subject) {
         int result = 0;
@@ -381,14 +381,14 @@ public class Student extends Person {
     }
 	
     /**
-     * Calcul le poid de l'étudiant avec l'étudiant 2
+     * Calcul le poids de Student avec s2
      * TODO
      * @param s2
      * @param subject
-     * @return
+     * @return le poids de l'arête (Student, s2)
      */
 	public int calculPoid(Student s2, Subject subject) {
-        //on part du principe que cette fonction s'execute depuis un Ã©lÃ¨ve de 1Ã¨re annÃ©e
+        //on part du principe que cette fonction s'execute depuis un élÃ¨ve de 1Ã¨re année
         int s1Score = this.bonusMalusFirstYear(subject);
         int s2Score = s2.bonusMalusThirdYear(subject);
         return Math.abs(s1Score - s2Score);
