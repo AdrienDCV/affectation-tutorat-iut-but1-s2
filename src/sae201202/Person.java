@@ -1,16 +1,21 @@
 package sae201202;
 
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  * 
  * @authors adrien.dacostaveiga & adrien.degand
  *
  */
-public class Person {
+public abstract class Person {
 	// class attributes
 	private String name;
 	private String forename;
+	private final LocalDate birthDate;
 	private int age;
+	private final String ID;
+	private String passWord;
 	private String mail;
 	
 	// constructor(s)
@@ -21,94 +26,53 @@ public class Person {
 	 * @param age
 	 * @param mail
 	 */
-	public Person (String name, String forename, int age, String mail) {
+	public Person (String name, String forename, LocalDate birthDate, String passWord) {
 		this.name = name;
 		this.forename = forename;
-		this.age = age;
-		this.mail = mail;
+		this.birthDate = birthDate;
+		this.age = Period.between(birthDate,LocalDate.now()).getYears();
+		this.ID = setID(name, forename);
+		this.passWord = passWord;
+		this.mail = setMail(name, forename);
 	}
-	
-	// methods 
-	/**
-	 * Retourne l'attribut name
-	 * TODO
-	 * @return la valeur de l'attribut name
-	 */
+
 	public String getName() {
 		return name;
 	}
-	
-	/**
-	 * Change l'attribut Name
-	 * TODO
-	 * @param name
-	 */
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	/**
-	 * Retourne l'attribut Forename
-	 * TODO
-	 * @return la valeur de l'attribut forename
-	 */
+
 	public String getForename() {
 		return forename;
 	}
-	
-	/**
-	 * Change l'attribut Forename
-	 * TODO
-	 * @param forename
-	 */
+
 	public void setForename(String forename) {
 		this.forename = forename;
 	}
-	
-	/**
-	 * Retourne l'attribut Age
-	 * TODO
-	 * @return la valeur de l'attribut age
-	 */
+
 	public int getAge() {
 		return age;
 	}
-	
-	/**
-	 * Change l'attribut Age
-	 * TODO
-	 * @param age
-	 */
+
 	public void setAge(int age) {
 		this.age = age;
 	}
+
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
 	
-	/**
-	 * Retourne l'attribut Mail
-	 * TODO
-	 * @return la valeur de l'attribut mail
-	 */
 	public String getMail() {
-		return mail;
+		return this.mail;
 	}
 	
-	/**
-	 * Change l'attribut Mail
-	 * TODO
-	 * @param mail
-	 */
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+	public abstract String setMail(String name, String forename); 
 	
-	/**
-	 * Retourne l'objet Person de la forme "nom, prénom, age, mail"
-	 */
+	public abstract String setID(String name, String forename);
+	
 	public String toString() {
-		return name + ", " + forename + ", " + age + ", " + mail;
+		return name + ' ' + forename + "(" + age + ") : " + "ID : " + ID + ", mail : " + mail; 
 	}
-	
-	
-	
-	
 }

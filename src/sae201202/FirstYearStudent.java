@@ -1,5 +1,6 @@
 package sae201202;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -8,36 +9,58 @@ import java.util.*;
  *
  */
 public class FirstYearStudent extends Student {
+	
 	// class attributes
 	private Student isTutoredBy;
-	private Subject subject;
+	private Subject subjectTutored;
 	
-	// constructors
-	/**
-	 * 
-	 * @param name
-	 * @param forename
-	 * @param age
-	 * @param mail
-	 * @param scholarYear
-	 * @param group
-	 * @param studentID
-	 * @param motivation
-	 * @param absence
-	 * @param grades
-	 * @param isTutoredBy
-	 * @param subject
-	 */
-	public FirstYearStudent(String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation, int absence, Map<Subject, Double> grades, Student isTutoredBy, Subject subject) {
-		super(name, forename, age, mail, scholarYear, group, studentID, motivation, absence, false, grades);
-		this.isTutoredBy = isTutoredBy;
-		this.subject = subject;
+	// constructor
+	public FirstYearStudent(String name, String forename, LocalDate birthDate, String ID, String passWord, String mail,
+							int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, grades);
+		this.isTutoredBy = null;
+		this.subjectTutored = null;
 	}
-	public FirstYearStudent(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation, int absence, Map<Subject, Double> grades) {
-		this(name, forename, age, mail, schoolYear, group, studentID, motivation, absence, grades, null, null);
+	
+	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, grades);
+		this.isTutoredBy = null;
+		this.subjectTutored = null;
+	}
+	
+	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, new HashMap<Subject, Double>());
+		this.isTutoredBy = null;
+		this.subjectTutored = null;
+	}
+	
+	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, int absence, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, Motivation.UNKNOWN, absence, grades);
+		this.isTutoredBy = null;
+		this.subjectTutored = null;
+	}
+	
+	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, int absence) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, Motivation.UNKNOWN, absence, new HashMap<Subject, Double>());
+		this.isTutoredBy = null;
+		this.subjectTutored = null;
 	}
 
-	public FirstYearStudent(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation, int absence) {
-		this(name, forename, age, mail, schoolYear, group, studentID, motivation, absence, new HashMap<Subject,Double>(), null, null);
+	// methods
+	public Student getIsTutoredBy() {
+		return isTutoredBy;
 	}
+
+	public void setIsTutoredBy(Student isTutoredBy) {
+		this.isTutoredBy = isTutoredBy;
+	}
+
+	public Subject getSubjectTutored() {
+		return subjectTutored;
+	}
+
+	public void setSubjectTutored(Subject subjectTutored) {
+		this.subjectTutored = subjectTutored;
+	}
+
 }

@@ -1,5 +1,7 @@
 package sae201202;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,34 +11,43 @@ import java.util.Map;
  *
  */
 public class SecondYearStudent extends Student{
+	
 	// class attributes
 	private Student isTutorOf;
-	private Subject subject;
+	private Subject subjectTutord;
 	
 	// constructor(s)
-	/**
-	 * 
-	 * @param name
-	 * @param forename
-	 * @param age
-	 * @param mail
-	 * @param scholarYear
-	 * @param group
-	 * @param studentID
-	 * @param motivation
-	 * @param absence
-	 * @param  
-	 * @param grades
-	 * @param isTutorOf
-	 */
-	public SecondYearStudent(String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation, int absence, Map<Subject, Double> grades, Student isTutorOf, Subject subject) {
-		super(name, forename, age, mail, scholarYear, group, studentID, motivation, absence, false, grades);
+	public SecondYearStudent(String name, String forename, LocalDate birthDate, String ID, String passWord, String mail,
+							 int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, grades);
+		this.isTutorOf = null;
+		this.subjectTutord = null;
+	}
+
+	public SecondYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence,
+							 Map<Subject, Double> grades) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, grades);
+		this.isTutorOf = null;
+		this.subjectTutord = null;
+	}
+
+	public Student getIsTutorOf() {
+		return isTutorOf;
+	}
+
+	public void setIsTutorOf(Student isTutorOf) {
 		this.isTutorOf = isTutorOf;
-		this.subject = subject;
 	}
-	public SecondYearStudent(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation, int absence, Map<Subject, Double> grades) {
-		this(name, forename, age, mail, schoolYear, group, studentID, motivation, absence, grades, null, null);
+
+	public Subject getSubjectTutored() {
+		return subjectTutord;
 	}
+
+	public void setSubject(Subject subjectTutored) {
+		this.subjectTutord = subjectTutored;
+	}
+	
+	// methods
 
 
 }

@@ -5,6 +5,7 @@ import fr.ulille.but.sae2_02.graphes.Arete;
 import fr.ulille.but.sae2_02.graphes.CalculAffectation;
 import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -101,13 +102,15 @@ public class Affectation {
 		//ajout des bots dans la liste des 1A
 		if(firstYear.size() != mostPopulated()) {
 			for(int i=firstYear.size(); i<mostPopulated(); i++) {
-				firstYear.add(new FirstYearStudent("X", "---", 0, "---", 0, '-', "---", Motivation.UNKNOWN, 1000));
+				firstYear.add(new FirstYearStudent("FAUX", "Profil", LocalDate.of(2000, 01, 01), "---", "---", "---",
+						1, '-', Motivation.UNKNOWN, 1000, new HashMap<Subject, Double>()));
 			}
 		}
 		//ajout des bots dans la liste des 3A
 		if (thirdSecondYear.size() != mostPopulated()) {
 			for(int i=thirdSecondYear.size(); i<mostPopulated(); i++) {
-				thirdSecondYear.add(new ThirdYearStudent("XXX", "---", 0, "---", 0, '-', "---", Motivation.UNKNOWN, 1000));
+				thirdSecondYear.add(new ThirdYearStudent("FAUX", "Profil", LocalDate.of(2000, 01, 01), "---", "---", "---",
+						3, '-', Motivation.UNKNOWN, 1000, new HashMap<Subject, Double>( )));
 			}
 		}
 	}
@@ -272,7 +275,7 @@ public class Affectation {
     public List<Student> getSeveralTutored(List<Student> botAffectation) {
     	List<Student> result = new ArrayList<Student>();
     	for(int i = 0; i < graphe.sommets().size(); i ++) {
-    		if (graphe.sommets().get(i).isThirdYear() && graphe.sommets().get(i).getSeveralTutored()) {
+    		if (graphe.sommets().get(i).isThirdYear() && ((ThirdYearStudent) graphe.sommets().get(i)).doesAcceptSeveralTutored()) {
     			if(result.size() < botAffectation.size()) {
     				result.add(graphe.sommets().get(i));
     			}

@@ -1,5 +1,7 @@
 package sae201202;
 
+import java.time.LocalDate;
+
 /**
  * 
  * @authors adrien.dacostaveiga & adrien.degand
@@ -8,43 +10,15 @@ package sae201202;
 
 public class Teacher extends Person {
 	// class attributes
-	private String teacherID;
 	private String teaching;
 	
-
-	/**
-	 * 
-	 * @param name
-	 * @param forename
-	 * @param age
-	 * @param mail
-	 * @param teacherID
-	 * @param teaching
-	 */
 	// constructor(s)
-	public Teacher(String name, String forename, int age, String mail, String teacherID, String teaching) {
-		super(name, forename, age, mail);
-		this.teacherID = teacherID;
-		this.teaching = teaching; 
+	public Teacher(String name, String forename, LocalDate birthDate, String ID, String passWord, String mail) {
+		super(name, forename, birthDate, passWord);
+		this.setMail(name, forename);
+		this.setID(name, forename);	
 	}
 
-	/**
-	 * 
-	 * Retourne l'attribut TeacherID
-	 * @return la valeur de l'attribut teacherID
-	 */
-	// Methods 
-	public String getTeacherID() {
-		return teacherID;
-	}
-	
-	/**
-	 * Change l'attribut TeacherID
-	 * @param teacherID
-	 */
-	public void setTeacherID(String teacherID) {
-		this.teacherID = teacherID;
-	}
 	/**
 	 * 
 	 * Retourne l'attribut Teaching
@@ -62,6 +36,16 @@ public class Teacher extends Person {
 	 */
 	public void setTeaching(String teaching) {
 		this.teaching = teaching;
+	}
+
+	@Override
+	public String setMail(String name, String forename) {
+		return name.toLowerCase().replaceAll(" ", "")+'.'+forename.toLowerCase().replaceAll(" ", "")+"@univ-lille.fr";
+	}
+
+	@Override
+	public String setID(String name, String forename) {
+		return name.toLowerCase().replaceAll(" ", "")+'.'+forename.toLowerCase().replaceAll(" ", "");
 	}
 
 }

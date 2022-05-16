@@ -1,5 +1,6 @@
 package sae201202;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,52 +13,63 @@ import java.util.Map;
 public class ThirdYearStudent extends Student {
 	// class attributes
 	private Map<Student, Subject> isTutorOf;
+	private boolean acceptsSeveralTutored;
 	
+	// constrcutor(s)
 	/**
 	 * 
 	 * @param name
 	 * @param forename
-	 * @param age
+	 * @param birthDate
+	 * @param ID
+	 * @param passWord
 	 * @param mail
 	 * @param scholarYear
 	 * @param group
-	 * @param studentID
 	 * @param motivation
 	 * @param absence
 	 * @param grades
-	 * @param isTutorOf
+	 * @param acceptsSeveralTutored
 	 */
-	// constructor(s)
-	public ThirdYearStudent(String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation, int absence, boolean acceptsSeveralTutored, Map<Subject, Double> grades, Map<Student, Subject> isTutorOf) {
-		super(name, forename, age, mail, scholarYear, group, studentID, motivation, absence, acceptsSeveralTutored, grades);
+	public ThirdYearStudent(String name, String forename, LocalDate birthDate, String ID, String passWord, String mail,
+							int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades, boolean acceptsSeveralTutored) {
+		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, grades);
+		this.isTutorOf = new HashMap<Student, Subject>();
+		this.acceptsSeveralTutored = acceptsSeveralTutored;
+	}
+	
+	// constructeur faux-profil
+	public ThirdYearStudent(String name, String forename, LocalDate birthDate, String ID, String passWord, String mail,
+							int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, grades);
+		this.isTutorOf = new HashMap<Student, Subject>();
+		this.acceptsSeveralTutored = false;
+	}
+
+	
+	public ThirdYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation,
+			int absence, boolean acceptsSeveralTutored, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, grades);
+	}
+
+	// methods
+	public Map<Student, Subject> getIsTutorOf() {
+		return isTutorOf;
+	}
+
+	public void setIsTutorOf(Map<Student, Subject> isTutorOf) {
 		this.isTutorOf = isTutorOf;
 	}
-	public ThirdYearStudent(String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation, int absence, boolean acceptsSeveralTutored, Map<Subject, Double> grades) {
-		this(name, forename, age, mail, scholarYear, group, studentID, motivation, absence, acceptsSeveralTutored, grades, new HashMap<Student,Subject>());
+
+	public boolean doesAcceptSeveralTutored() {
+		return this.acceptsSeveralTutored;
 	}
-	public ThirdYearStudent(String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation, int absence, boolean acceptsSeveralTutored) {
-		this(name, forename, age, mail, scholarYear, group, studentID, motivation, absence, acceptsSeveralTutored, new HashMap<Subject,Double>(), new HashMap<Student,Subject>());
+	
+
+	public void setAcceptsSeveralTutored(boolean severalTutored) {
+		this.acceptsSeveralTutored = severalTutored;
 	}
-	public ThirdYearStudent(String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation, int absence) {
-		this(name, forename, age, mail, scholarYear, group, studentID, motivation, absence, false, new HashMap<Subject,Double>(), new HashMap<Student,Subject>());
-	}
-	public ThirdYearStudent(String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation) {
-		this(name, forename, age, mail, scholarYear, group, studentID, motivation, 0, false, new HashMap<Subject,Double>(), new HashMap<Student,Subject>());
-	}
-	public ThirdYearStudent(String name, String forename, int age, String mail, int scholarYear, char group, String studentID) {
-		this(name, forename, age, mail, scholarYear, group, studentID, Motivation.UNKNOWN, 0, false, new HashMap<Subject,Double>(), new HashMap<Student,Subject>());
-	}
-	public ThirdYearStudent(String name, String forename, int age, String mail, int scholarYear, char group) {
-		this(name, forename, age, mail, scholarYear, group, "---", Motivation.UNKNOWN, 0, false, new HashMap<Subject,Double>(), new HashMap<Student,Subject>());
-	}
-	public ThirdYearStudent(String name, String forename, int age, String mail, int scholarYear) {
-		this(name, forename, age, mail, scholarYear, '-', "---", Motivation.UNKNOWN, 0, false, new HashMap<Subject,Double>(), new HashMap<Student,Subject>());
-	}
-	public ThirdYearStudent(String name, String forename, int age, String mail) {
-		this(name, forename, age, mail, 0, '-', "---", Motivation.UNKNOWN, 0, false, new HashMap<Subject,Double>(), new HashMap<Student,Subject>());
-	}
-	public ThirdYearStudent(String name, String forename, int age) {
-		this(name, forename, age, "---", 0, '-', "---", Motivation.UNKNOWN, 0, false, new HashMap<Subject,Double>(), new HashMap<Student,Subject>());
-	}
+	
+	
 
 }

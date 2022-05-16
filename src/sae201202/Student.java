@@ -1,102 +1,64 @@
 package sae201202;
 
-import java.awt.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 
 /**
  * 
+ * @
  * @authors adrien.dacostaveiga & adrien.degand
  *
  */
 public class Student extends Person {
 	// class attributes
+	private String mail;
 	private int scholarYear;
 	private char group;
-	private String studentID;
-	private Map<Subject,Double> grades;
+	private Map<Subject, Double> grades;
 	private Motivation motivation;
 	private int absence;
-	private boolean acceptsSeveralTutored = false;
-	private boolean priority;	
 	private int score = 0;
 	
-	/**
-	 * 
-	 * @param name
-	 * @param forename
-	 * @param age
-	 * @param mail
-	 * @param scholarYear
-	 * @param group
-	 * @param studentID
-	 * @param motivation
-	 * @param absence
-	 * @param grades
-	 */
-	// constructor(s)	
+
 	// constructor(s)
-	public Student (String name, String forename, int age, String mail, int scholarYear, char group, String studentID, Motivation motivation, int absence, boolean acceptsSeveralTutored, Map<Subject, Double> grades) {
-		super(name, forename, age, mail);
-		this.setScholarYear(scholarYear);
+	public Student (String name, String forename, LocalDate birthDate, String ID, String passWord, String mail, int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, passWord);
+		try {
+			this.setScholarYear(scholarYear);
+		} catch (WrongScholarYearException e) {
+			System.out.println("WrongScholarYearException. Merci d'entrer un numéro compris entre 1 et 3 svp.");
+		}
+		this.setMail(name, forename); 
+		this.setID(name, forename);
 		this.group = group;
-		this.studentID = studentID;
 		this.motivation = motivation;
 		this.absence = absence;
-		this.acceptsSeveralTutored = acceptsSeveralTutored;
 		this.grades = grades;
-	
-	}
-	/**
-	 * 
-	 * @param name
-	 * @param forename
-	 * @param age
-	 * @param mail
-	 * @param schoolYear
-	 * @param group
-	 * @param studentID
-	 * @param motivation
-	 * @param absence
-	 * @param acceptsSeveralTutored
-	 */
-	public Student(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation, int absence, boolean acceptsSeveralTutored) {
-		this(name, forename, age, mail, schoolYear, group, studentID, motivation, absence, acceptsSeveralTutored, new HashMap<Subject, Double>());
-	}
-	public Student(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation, int absence, Map<Subject, Double> grades) {
-		this(name, forename, age, mail, schoolYear, group, studentID, motivation, absence, false, grades);
-	}
-	public Student(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation, int absence) {
-		this(name, forename, age, mail, schoolYear, group, studentID, motivation, absence, false, new HashMap<Subject, Double>());
-	}
-	public Student(String name, String forename, int age, String mail, int schoolYear, char group, String studentID, Motivation motivation) {
-		this(name, forename, age, mail, schoolYear, group, studentID, motivation, 0, false, new HashMap<Subject, Double>());
-	}
-	public Student(String name, String forename, int age, String mail, int schoolYear, char group, String studentID) {
-		this(name, forename, age, mail, schoolYear, group, studentID, Motivation.UNKNOWN, 0, false, new HashMap<Subject, Double>());
-	}
-	public Student(String name, String forename, int age, String mail, int schoolYear, char group) {
-		this(name, forename, age, mail, schoolYear, group, "---", Motivation.UNKNOWN, 0, false, new HashMap<Subject, Double>());
-	}
-	public Student(String name, String forename, int age, String mail, int schoolYear) {
-		this(name, forename, age, mail, schoolYear, '-', "---", Motivation.UNKNOWN, 0, false, new HashMap<Subject, Double>());
-	}
-	public Student(String name, String forename, int age, String mail) {
-		this(name, forename, age, mail, 0, '-', "---", Motivation.UNKNOWN, 0, false, new HashMap<Subject, Double>());
-	}
-	public Student(String name, String forename, int age) {
-		this(name, forename, age, "---", 0, '-', "---", Motivation.UNKNOWN, 0, false, new HashMap<Subject, Double>());
 	}
 	
+	public Student (String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
+		super(name, forename, null, null);
+		try {
+			this.setScholarYear(scholarYear);
+		} catch (WrongScholarYearException e) {
+			System.out.println("WrongScholarYearException. Merci d'entrer un numéro compris entre 1 et 3 svp.");
+		}
+		this.setMail(name, forename); 
+		this.setID(name, forename);
+		this.group = group;
+		this.motivation = motivation;
+		this.absence = absence;
+		this.grades = grades;
+	}
+
 	// methods
 	/**
 	 * Retourne l'objet Student sous la forme : "nom, prénom, age, mail, Id_étudiant, année d'étude, groupe, notes, motivation"
 	 */
 	public String toString() {
-		return super.toString() + ", " + studentID + ", " + scholarYear + ", " + group + ", " + grades +  ", " + motivation;
+		return super.toString() + ", est en " + scholarYear + " année, moyennes : " + grades + ", motivation : " + motivation + ", nombre d'absences : " + absence;
 	}
 	
 	/**
@@ -104,6 +66,17 @@ public class Student extends Person {
 	 * TODO
 	 * @return la valeur de l'attribut scholarYear
 	 */
+	
+	@Override
+	public String setMail(String name, String forename) {
+		return name.toLowerCase().replaceAll(" ", "")+'.'+forename.toLowerCase().replaceAll(" ", "")+".etu@univ-lille.fr";
+	}
+	
+	@Override
+	public String setID(String name, String forename) {
+		return name.toLowerCase().replaceAll(" ", "")+'.'+forename.toLowerCase().replaceAll(" ", "")+".etu";
+	}
+	
 	public int getScholarYear() {
 		return scholarYear;
 	}
@@ -112,9 +85,15 @@ public class Student extends Person {
 	 * Change l'attribut ScholarYear
 	 * TODO
 	 * @param scholarYear
+	 * @throws WrongScholarYearException 
 	 */
-	public void setScholarYear(int scholarYear) {
+	public void setScholarYear(int scholarYear) throws WrongScholarYearException {
+		if (scholarYear >= 1 && scholarYear <= 3) {
 			this.scholarYear = scholarYear;
+		} else {
+			throw new WrongScholarYearException();
+		}
+			
 	}
 	
 	/**
@@ -136,52 +115,15 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * Retourne l'attribut StudentID
-	 * TODO
-	 * @return la valeur de l'attribut studentID
-	 */
-	public String getStudentID() {
-		return studentID;
-	}
-	
-	/**
-	 * Change l'attribut StudentID
-	 * TODO
-	 * @param studentID
-	 */
-	public void setStudentID(String studentID) {
-		this.studentID = studentID;
-	}
-	
-	/**
 	 * Retourne la liste Grades
 	 * TODO
 	 * @return la liste des notes d'un Student
 	 */
 	public Map<Subject, Double> getGrades() {
 		return grades;
-	}
+	}	
 	
-	
-	
-	/**
-	 * Retourne l'attribut SeveralTutored
-	 * TODO
-	 * @return true / false
-	 */
-	public boolean getSeveralTutored() {
-		return this.acceptsSeveralTutored;
-	}
-	
-	/**
-	 * Change l'attribut SeveralTutored
-	 * TODO
-	 * @param severalTutored
-	 */
-	public void setSeveralTutored(boolean severalTutored) {
-		this.acceptsSeveralTutored = severalTutored;
-	}
-	
+
 	/**
 	 * Retourne une liste des matières des notes
 	 * TODO
@@ -194,8 +136,7 @@ public class Student extends Person {
 		}
 		return result;
 	}
-	
-	
+
 	/**
 	 * Retourne la/les notes en fonction de l'objet matière
 	 * TODO
@@ -388,7 +329,7 @@ public class Student extends Person {
      * @return le poids de l'arête (Student, s2)
      */
 	public int calculPoid(Student s2, Subject subject) {
-        //on part du principe que cette fonction s'execute depuis un élÃ¨ve de 1Ã¨re année
+        //on part du principe que cette fonction s'execute depuis un Ã©lÃ¨ve de 1Ã¨re annÃ©e
         int s1Score = this.bonusMalusFirstYear(subject);
         int s2Score = s2.bonusMalusThirdYear(subject);
         return Math.abs(s1Score - s2Score);
