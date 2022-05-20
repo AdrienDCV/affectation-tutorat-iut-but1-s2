@@ -95,6 +95,9 @@ public class UseAffectation {
 		CalculAffectation<Student> calculNormal = new CalculAffectation<Student>(A.graphe, A.getFirstYear(), A.getThirdSecondYear());
 		CalculAffectation<Student> calculForced = new CalculAffectation<Student>(Forced.graphe, Forced.getFirstYear(), Forced.getThirdSecondYear());
 		
+		A.setCalcul(calculNormal);
+		
+		
 		System.out.println(calculNormal.getAffectation());
 		calculForced.getAffectation();
 		
@@ -103,6 +106,7 @@ public class UseAffectation {
 		B.setCalcul(calculNormal);
 		
 		List<Arete<Student>> listeArete = new ArrayList<Arete<Student>>();
+		
 		do {
 			botAffectation.clear();
 			severalAffectation.clear();
@@ -128,7 +132,9 @@ public class UseAffectation {
 			
 		} while(B.haveBot());
 		
-		listeArete.addAll(A.getListArete(calculNormal));
+		//A.getListArete(A.eviterAffectation(Honore, Sophie)
+		//A.getListArete(calculNormal)
+		listeArete.addAll(A.getListArete(A.getListArete(A.eviterAffectation(Sabine, Laure))));
 		listeArete.addAll(Forced.getListArete(calculForced));
 		display(listeArete);
 	}

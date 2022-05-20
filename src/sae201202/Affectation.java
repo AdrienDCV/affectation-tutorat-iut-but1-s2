@@ -258,9 +258,9 @@ public class Affectation {
     public List<Student> getBotAffectation(CalculAffectation<Student> c) {
     	List<Student> result = new ArrayList<Student>();
     	for (int i = 0 ; i < c.getAffectation().size(); i = i+1) {
-    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && c.getAffectation().get(i).getExtremite2().getName().equals("XXX")) {
+    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && c.getAffectation().get(i).getExtremite2().getName().equals("FAUX")) {
     			result.add(c.getAffectation().get(i).getExtremite1());
-    		} else if (c.getAffectation().get(i).getExtremite2().isThirdYear() && c.getAffectation().get(i).getExtremite1().getName().equals("XXX")) {
+    		} else if (c.getAffectation().get(i).getExtremite2().isThirdYear() && c.getAffectation().get(i).getExtremite1().getName().equals("FAUX")) {
     			result.add(c.getAffectation().get(i).getExtremite2());
     		}
     	}
@@ -275,7 +275,7 @@ public class Affectation {
     public List<Student> getSeveralTutored(List<Student> botAffectation) {
     	List<Student> result = new ArrayList<Student>();
     	for(int i = 0; i < graphe.sommets().size(); i ++) {
-    		if (graphe.sommets().get(i).isThirdYear() && (graphe.sommets().get(i)).doesAcceptSeveralTutored()) {
+    		if (graphe.sommets().get(i).isThirdYear() && graphe.sommets().get(i).doesAcceptSeveralTutored()) {
     			if(result.size() < botAffectation.size()) {
     				result.add(graphe.sommets().get(i));
     			}
@@ -300,7 +300,7 @@ public class Affectation {
      */
     public boolean haveBot() {
     	for(int i = 0; i < graphe.sommets().size(); i ++) {
-    		if (graphe.sommets().get(i).getName().equals("XXX")) {
+    		if (graphe.sommets().get(i).getName().equals("FAUX")) {
     			return true;
     		}
     	}
@@ -315,7 +315,7 @@ public class Affectation {
     public List<Arete<Student>> getListArete(CalculAffectation<Student> c) {
     	List<Arete<Student>> result = new ArrayList<Arete<Student>>();
     	for (int i = 0 ; i < c.getAffectation().size(); i = i+1) {
-    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && !(c.getAffectation().get(i).getExtremite2().getName().equals("XXX"))) {
+    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && !(c.getAffectation().get(i).getExtremite2().getName().equals("FAUX"))) {
     			//ajout des aretes qui ne comporte pas de bot
     			result.add(graphe.getArete(c.getAffectation().get(i).getExtremite1(), c.getAffectation().get(i).getExtremite2()));
     		}
@@ -323,5 +323,48 @@ public class Affectation {
     	
     	return result;
     }
+    
+    public List<Arete<Student>> getListArete(List<Arete<Student>> l) {
+    	List<Arete<Student>> result = new ArrayList<Arete<Student>>();
+    	for (int i = 0 ; i < l.size(); i = i+1) {
+    		if(l.get(i).getExtremite1().isFirstYear() && !(l.get(i).getExtremite2().getName().equals("FAUX"))) {
+    			//ajout des aretes qui ne comporte pas de bot
+    			result.add(graphe.getArete(l.get(i).getExtremite1(), l.get(i).getExtremite2()));
+    		}
+    	}
+    	
+    	return result;
+    }
+    
+    public List<Arete<Student>> eviterAffectation(Student s1, Student s2) {
+    	List<Arete<Student>> result = new ArrayList<Arete<Student>>();
+    	//on parcours le tableau de l'affectation qui comporte des aretes
+    	for(int i=0; i < c.getAffectation().size(); i = i + 1) {
+    		//on vérifie que les extrémités soit s1 et s2
+    		if(c.getAffectation().get(i).getExtremite1().equals(s1) 
+    				&& c.getAffectation().get(i).getExtremite2().equals(s2)) {
+    			//tant qu'il n'est pas affectés ou que la liste des sommets est entièrement parcouru
+    			boolean estAffecte = false;
+    			int j = 0;
+    			while(!estAffecte && j < graphe.sommets().size()) {
+    				//si le sommet est un 3ème année et différent de s2
+    				if(graphe.sommets().get(j).isThirdYear() 
+    						&& !graphe.sommets().get(j).equals(s2)
+    						&& ((ThirdYearStudent) graphe.sommets().get(j)).doesAcceptSeveralTutored()) {
+    					Arete<Student> arete = new Arete<Student>(s1, graphe.sommets().get(j));
+    					result.add(arete);
+    					estAffecte = true;
+    				}
+    				j = j + 1;
+    			}
+    		//sinon on ajoute l'arete
+    		} else {
+    			result.add(c.getAffectation().get(i));
+    		}
+    	}
+    	
+    	return result;
+    }
+    
   
 }
