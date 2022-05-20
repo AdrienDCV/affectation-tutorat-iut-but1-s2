@@ -31,12 +31,12 @@ public class Affectation {
 		thirdSecondYear = new ArrayList<Student>();
 		graphe = new GrapheNonOrienteValue<Student>();
 		forcedAssignment = new ArrayList<Student>();
-		c = new CalculAffectation<Student>(graphe, firstYear, firstYear);
+		c = new CalculAffectation<Student>(graphe, firstYear, firstYear); 
 	}
 	
 	// methods
 	/**
-	 * Retourne la liste des premières années
+	 * Retourne la liste des premiï¿½res annï¿½es
 	 * TODO
 	 * @return la valeur de la liste firstYear
 	 */
@@ -45,7 +45,7 @@ public class Affectation {
 	}
 	
 	/**
-	 * Retourne la liste des troisièmes années
+	 * Retourne la liste des troisiï¿½mes annï¿½es
 	 * TODO
 	 * @return la valeur de la liste thirdYear
 	 */
@@ -69,7 +69,7 @@ public class Affectation {
     	return this.c;
     }
 	/**
-	 * Ajout des étudiants contenu dans la student liste dans les listes de la classes respective
+	 * Ajout des ï¿½tudiants contenu dans la student liste dans les listes de la classes respective
 	 * TODO
 	 * @param studentList
 	 */
@@ -86,7 +86,7 @@ public class Affectation {
 	}
 	
 	/**
-	 * Retourne la taille de la plus grande liste entre les premières années et les deuxièmes/troisièmes années
+	 * Retourne la taille de la plus grande liste entre les premiï¿½res annï¿½es et les deuxiï¿½mes/troisiï¿½mes annï¿½es
 	 * TODO
 	 * @return la liste la plus longue
 	 */
@@ -95,7 +95,7 @@ public class Affectation {
 	}
 	
 	/**
-	 * Ajoute des étudiants fictif dans la liste la plus petite
+	 * Ajoute des ï¿½tudiants fictif dans la liste la plus petite
 	 * TODO
 	 */
 	public void fillMissingStudents() {
@@ -116,23 +116,23 @@ public class Affectation {
 	}
 	
 	/**
-	 * Ajoute les les premières années et les deuxièmes/troisièmes années dans une liste
+	 * Ajoute les les premiï¿½res annï¿½es et les deuxiï¿½mes/troisiï¿½mes annï¿½es dans une liste
 	 * TODO
 	 * @param studentList
 	 */
 	public void unionStudentLists(List<Student> studentList) {  
-		//ajoute les 1A et les 2A/3A dans la liste en paramètre
+		//ajoute les 1A et les 2A/3A dans la liste en paramï¿½tre
         studentList.addAll(firstYear);
         studentList.addAll(thirdSecondYear);
     }
 
 	/**
-	 * Ajoute les sommets des étudiants de la liste
+	 * Ajoute les sommets des ï¿½tudiants de la liste
 	 * TODO
 	 * @param studentList
 	 */
 	public void addNodes(List<Student> studentList) {
-		//création des sommets
+		//crï¿½ation des sommets
 		for (int i=0; i<studentList.size(); i++) {
 			graphe.ajouterSommet(studentList.get(i));
 		}
@@ -144,7 +144,7 @@ public class Affectation {
 	 * TODO
 	 */
     public void addEdges() {
-    	//création des aretes
+    	//crï¿½ation des aretes
         for(int i = 0; i < firstYear.size(); i ++) {
             for(int j = 0; j < thirdSecondYear.size(); j ++) {
             	for(int k= 0; k < firstYear.get(i).getSubject().size(); k ++) {
@@ -156,38 +156,38 @@ public class Affectation {
     }
     
     /**
-     * Vérifie si l'étudiant 1 et l'étudiant 2 sont une arete
+     * Vï¿½rifie si l'ï¿½tudiant 1 et l'ï¿½tudiant 2 sont une arete
      * TODO
      * @param s1
      * @param s2
-     * @return true si le graphe contient une arête liant s1 et s2 / false si le graphe ne contient pas d'arête liant s1 et s2 
+     * @return true si le graphe contient une arï¿½te liant s1 et s2 / false si le graphe ne contient pas d'arï¿½te liant s1 et s2 
      */
     private boolean isEdge(Student s1, Student s2) {
     	return graphe.contientArete(s1, s2);
     }
     
     /**
-     * Force l'affectation de l'étudiant 1 et l'étudiant 2
+     * Force l'affectation de l'ï¿½tudiant 1 et l'ï¿½tudiant 2
      * TODO
      * @param s1
      * @param s2
      * @param A
      * @param studentList
-     * @return true si l'affectation forcée a réussit / false si non
+     * @return true si l'affectation forcï¿½e a rï¿½ussit / false si non
      */
     public boolean affectationForce(Student s1, Student s2, Affectation A, List <Student> studentList) {
-    	//Force une affectation, true si réussie false sinon
+    	//Force une affectation, true si rï¿½ussie false sinon
     	if (!this.isEdge(s1, s2)) {
-    		//on enlève le 1A / 3A des listes pour l'affecter dans la liste des affectations forcé
+    		//on enlï¿½ve le 1A / 3A des listes pour l'affecter dans la liste des affectations forcï¿½
     		A.firstYear.remove(s1);
         	A.thirdSecondYear.remove(s2);
         	forcedAssignment.add(s1);
         	forcedAssignment.add(s2);
         	
-        	//on les enlève de la liste des étudiants à affecter normalement
+        	//on les enlï¿½ve de la liste des ï¿½tudiants ï¿½ affecter normalement
         	studentList.removeAll(forcedAssignment);
         	
-        	//création de l'arete forcé
+        	//crï¿½ation de l'arete forcï¿½
         	this.fillStudentsLists(forcedAssignment);
     		this.addNodes(forcedAssignment);
     		graphe.ajouterArete(forcedAssignment.get(0),forcedAssignment.get(1), Integer.MAX_VALUE);		
@@ -216,11 +216,11 @@ public class Affectation {
     }
 
     /**
-     * Tri la liste des premières années
+     * Tri la liste des premiï¿½res annï¿½es
      * TODO
      */
     public void triFirstYear() {
-    	//liste trié
+    	//liste triï¿½
     	List<Student> tri = new ArrayList<Student>();
     	//liste des plus petits poid de chaque firstyear
     	List<Integer> minPoid = new ArrayList<Integer>();
@@ -238,7 +238,7 @@ public class Affectation {
             Collections.sort(sortedList);
             minPoid.add(sortedList.get(0));
     	}
-    	//on cherche l'indice du int le plus petit et on le supprime de firstyear pour l'ajouter dans la liste trié
+    	//on cherche l'indice du int le plus petit et on le supprime de firstyear pour l'ajouter dans la liste triï¿½
     	int idx = 0;
     	while(firstYear.size() != 0) {
     		idx = this.minIdxList(minPoid);
@@ -246,14 +246,14 @@ public class Affectation {
     		minPoid.remove(idx);
     	}
     	
-    	//on remplace firstyear par la liste trié
+    	//on remplace firstyear par la liste triï¿½
     	firstYear = tri;
     }
     
     /**
-     * retourne la liste des étudiants qui ont une affectation avec un étudiant fictif
+     * retourne la liste des ï¿½tudiants qui ont une affectation avec un ï¿½tudiant fictif
      * @param c
-     * @return la liste des FirstYeartStudent / ThirdYearStudent / SecondeYearStudent qui sont affectés à un faux profil d'étudiant 
+     * @return la liste des FirstYeartStudent / ThirdYearStudent / SecondeYearStudent qui sont affectï¿½s ï¿½ un faux profil d'ï¿½tudiant 
      */
     public List<Student> getBotAffectation(CalculAffectation<Student> c) {
     	List<Student> result = new ArrayList<Student>();
@@ -270,12 +270,12 @@ public class Affectation {
     /**
      * retourne la liste des tuteurs qui acceptent plusieurs FirstYearStudent
      * @param botAffectation
-     * @return la liste des ThirdYearStudent qui acceptent d'être tuteur de plus d'un FirstYearStudent
+     * @return la liste des ThirdYearStudent qui acceptent d'Ãªtre tuteur de plus d'un FirstYearStudent
      */
     public List<Student> getSeveralTutored(List<Student> botAffectation) {
     	List<Student> result = new ArrayList<Student>();
     	for(int i = 0; i < graphe.sommets().size(); i ++) {
-    		if (graphe.sommets().get(i).isThirdYear() && ((ThirdYearStudent) graphe.sommets().get(i)).doesAcceptSeveralTutored()) {
+    		if (graphe.sommets().get(i).isThirdYear() && (graphe.sommets().get(i)).doesAcceptSeveralTutored()) {
     			if(result.size() < botAffectation.size()) {
     				result.add(graphe.sommets().get(i));
     			}
@@ -308,9 +308,9 @@ public class Affectation {
     }
     
     /**
-     * Retourne une liste d'arete ne comprenant pas d'étudiant fictif
+     * Retourne une liste d'arete ne comprenant pas d'ï¿½tudiant fictif
      * @param c
-     * @return une liste d'arete ne comprenant pas d'étudiant fictif
+     * @return une liste d'arete ne comprenant pas d'ï¿½tudiant fictif
      */
     public List<Arete<Student>> getListArete(CalculAffectation<Student> c) {
     	List<Arete<Student>> result = new ArrayList<Arete<Student>>();

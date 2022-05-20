@@ -19,7 +19,7 @@ public class UseAffectation {
 	public static void display(List<Arete<Student>> liste) {
 		   String string = ""; 
 		   for(int i=0; i<liste.size(); i++) {
-			   System.out.println(liste.get(i).getExtremite1().getName() + " " + liste.get(i).getExtremite1().getForename() + " est affecté(e) à : " + liste.get(i).getExtremite2().getName() + " " + liste.get(i).getExtremite2().getForename());
+			   System.out.println(liste.get(i).getExtremite1().getName() + " " + liste.get(i).getExtremite1().getForename() + " est affectÃ©(e) Ã  : " + liste.get(i).getExtremite2().getName() + " " + liste.get(i).getExtremite2().getForename());
 		   }
 	}
 	
@@ -39,7 +39,7 @@ public class UseAffectation {
 		Sabine.getGrades().put(Subject.ALGO, 9.7);
 		
 		Map<Subject, Double> Hgrades = new HashMap<Subject,Double>();
-		Student Honore = new FirstYearStudent("MARTEL", "Honoré", LocalDate.of(2001, 11, 11), 1, 'D', Motivation.LOW_MOTIVATION, 1, Hgrades);
+		Student Honore = new FirstYearStudent("MARTEL", "HonorÃ©", LocalDate.of(2001, 11, 11), 1, 'D', Motivation.LOW_MOTIVATION, 1, Hgrades);
 		Honore.getGrades().put(Subject.ALGO, 11.7);
 		
 		Map<Subject, Double> Agrades = new HashMap<Subject,Double>();
@@ -48,11 +48,11 @@ public class UseAffectation {
 		
 		// creation of examples of 2nd  / 3rd year Students 
 		Map<Subject, Double> Pgrades = new HashMap<Subject,Double>();
-		Student Paul = new ThirdYearStudent("SANCHEZ", "Paul", LocalDate.of(2000, 6, 03), 3, 'L', Motivation.AVERAGE_MOTIVATION, 1, false, Pgrades);
+		Student Paul = new ThirdYearStudent("SANCHEZ", "Paul", LocalDate.of(2000, 6, 03), 3, 'L', Motivation.AVERAGE_MOTIVATION, 1, Pgrades, false);
 		Paul.getGrades().put(Subject.ALGO, 12.0);
 
 		Map<Subject, Double> Dgrades = new HashMap<Subject,Double>();
-		Student Daniel = new ThirdYearStudent("LEFEBVRE", "Daniel", LocalDate.of(2001, 10, 31), 3, 'M', Motivation.AVERAGE_MOTIVATION, 0, true, Dgrades);
+		Student Daniel = new ThirdYearStudent("LEFEBVRE", "Daniel", LocalDate.of(2001, 10, 31), 3, 'M', Motivation.AVERAGE_MOTIVATION, 0, Dgrades, true);
 		Daniel.getGrades().put(Subject.ALGO, 15.9);
 
 		Map<Subject, Double> SOgrades = new HashMap<Subject,Double>();
@@ -121,7 +121,7 @@ public class UseAffectation {
 			
 			CalculAffectation<Student> calculSeveralTutored = new CalculAffectation<Student>(C.graphe, C.getFirstYear(), C.getThirdSecondYear());
 			calculSeveralTutored.getAffectation();
-			listeArete.addAll(C.getListArete(calculSeveralTutored));
+			listeArete.addAll(C.getListArete(calculSeveralTutored)); 
 			B = C;
 			B.setCalcul(calculSeveralTutored);
 			
@@ -131,8 +131,5 @@ public class UseAffectation {
 		listeArete.addAll(A.getListArete(calculNormal));
 		listeArete.addAll(Forced.getListArete(calculForced));
 		display(listeArete);
-		
-		Student Adrien = new FirstYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 05, 25), 1, 'F', 0);
-		System.out.println(Adrien);
 	}
 }

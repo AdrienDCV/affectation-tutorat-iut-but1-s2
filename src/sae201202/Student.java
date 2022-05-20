@@ -20,6 +20,7 @@ public class Student extends Person {
 	private Motivation motivation;
 	private int absence;
 	private int score = 0;
+	protected boolean acceptsSeveralTutored;
 	
 
 	// constructor(s)
@@ -28,7 +29,7 @@ public class Student extends Person {
 		try {
 			this.setScholarYear(scholarYear);
 		} catch (WrongScholarYearException e) {
-			System.out.println("WrongScholarYearException. Merci d'entrer un numéro compris entre 1 et 3 svp.");
+			System.out.println("WrongScholarYearException. Merci d'entrer un numï¿½ro compris entre 1 et 3 svp.");
 		}
 		this.setMail(name, forename); 
 		this.setID(name, forename);
@@ -36,6 +37,24 @@ public class Student extends Person {
 		this.motivation = motivation;
 		this.absence = absence;
 		this.grades = grades;
+		this.acceptsSeveralTutored = false;
+	}
+	
+	// constructeur spÃ©cifique aux ThirdStudentYear
+	public Student (String name, String forename, LocalDate birthDate, String ID, String passWord, String mail, int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades, boolean acceptsSeveralTutored) {
+		super(name, forename, birthDate, passWord);
+		try {
+			this.setScholarYear(scholarYear);
+		} catch (WrongScholarYearException e) {
+			System.out.println("WrongScholarYearException. Merci d'entrer un numï¿½ro compris entre 1 et 3 svp.");
+		}
+		this.setMail(name, forename); 
+		this.setID(name, forename); 
+		this.group = group;
+		this.motivation = motivation;
+		this.absence = absence;
+		this.grades = grades;
+		this.acceptsSeveralTutored = acceptsSeveralTutored;
 	}
 	
 	public Student (String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
@@ -43,7 +62,7 @@ public class Student extends Person {
 		try {
 			this.setScholarYear(scholarYear);
 		} catch (WrongScholarYearException e) {
-			System.out.println("WrongScholarYearException. Merci d'entrer un numéro compris entre 1 et 3 svp.");
+			System.out.println("WrongScholarYearException. Merci d'entrer un numï¿½ro compris entre 1 et 3 svp.");
 		}
 		this.setMail(name, forename); 
 		this.setID(name, forename);
@@ -51,14 +70,15 @@ public class Student extends Person {
 		this.motivation = motivation;
 		this.absence = absence;
 		this.grades = grades;
+		this.acceptsSeveralTutored = false;
 	}
 
 	// methods
 	/**
-	 * Retourne l'objet Student sous la forme : "nom, prénom, age, mail, Id_étudiant, année d'étude, groupe, notes, motivation"
+	 * Retourne l'objet Student sous la forme : "nom, prï¿½nom, age, mail, Id_ï¿½tudiant, annï¿½e d'ï¿½tude, groupe, notes, motivation"
 	 */
 	public String toString() {
-		return super.toString() + ", est en " + scholarYear + " année, moyennes : " + grades + ", motivation : " + motivation + ", nombre d'absences : " + absence;
+		return super.toString() + ", est en " + scholarYear + " annÃ©e, moyennes : " + grades + ", motivation : " + motivation + ", nombre d'absences : " + absence;
 	}
 	
 	/**
@@ -69,12 +89,12 @@ public class Student extends Person {
 	
 	@Override
 	public String setMail(String name, String forename) {
-		return name.toLowerCase().replaceAll(" ", "")+'.'+forename.toLowerCase().replaceAll(" ", "")+".etu@univ-lille.fr";
+		return forename.toLowerCase().replaceAll(" ", "")+'.'+name.toLowerCase().replaceAll(" ", "")+".etu@univ-lille.fr";
 	}
 	
 	@Override
 	public String setID(String name, String forename) {
-		return name.toLowerCase().replaceAll(" ", "")+'.'+forename.toLowerCase().replaceAll(" ", "")+".etu";
+		return forename.toLowerCase().replaceAll(" ", "")+'.'+name.toLowerCase().replaceAll(" ", "")+".etu";
 	}
 	
 	public int getScholarYear() {
@@ -125,9 +145,9 @@ public class Student extends Person {
 	
 
 	/**
-	 * Retourne une liste des matières des notes
+	 * Retourne une liste des matiï¿½res des notes
 	 * TODO
-	 * @return une liste des matières (ressources)
+	 * @return une liste des matiï¿½res (ressources)
 	 */
 	public ArrayList<Subject> getSubject() {
 		ArrayList<Subject> result = new ArrayList<Subject>();
@@ -138,7 +158,7 @@ public class Student extends Person {
 	}
 
 	/**
-	 * Retourne la/les notes en fonction de l'objet matière
+	 * Retourne la/les notes en fonction de l'objet matiï¿½re
 	 * TODO
 	 * @param subject
 	 * @return 
@@ -175,7 +195,7 @@ public class Student extends Person {
 	}
 
 	/**
-	 * Retourne True si l'année de Student est 1
+	 * Retourne True si l'annï¿½e de Student est 1
 	 * TODO
 	 * @return true / false
 	 */
@@ -184,7 +204,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * Retourne True si l'année de Student est 2
+	 * Retourne True si l'annï¿½e de Student est 2
 	 * TODO
 	 * @return true / false
 	 */
@@ -193,7 +213,7 @@ public class Student extends Person {
 	}
 	
 	/**
-	 * Retourne True si l'année de Student est 3
+	 * Retourne True si l'annï¿½e de Student est 3
 	 * TODO
 	 * @return true / false
 	 */
@@ -201,11 +221,14 @@ public class Student extends Person {
 		return this.scholarYear==3;
 	} 
 	
+	public boolean doesAcceptSeveralTutored() {
+		return this.acceptsSeveralTutored;
+	}
 	
 	/**
-	 * Retourne la matière de la note la plus haute
+	 * Retourne la matiï¿½re de la note la plus haute
 	 * TODO
-	 * @return la matière de la note la plus haute
+	 * @return la matiï¿½re de la note la plus haute
 	 */
 	public Subject highestGrade () {
 		double max = 0.0;
@@ -222,7 +245,7 @@ public class Student extends Person {
 	/**
 	 * Retourne la note de la plus petite note
 	 * TODO
-	 * @return la matière de la note la plus petite
+	 * @return la matiï¿½re de la note la plus petite
 	 */
 	public Subject lowestGrade () {
 		double min = Double.MAX_VALUE;
@@ -237,7 +260,7 @@ public class Student extends Person {
 	}
 
 	/**
-	 * Retourne le score de l'étudiant première année en fonction de la matière
+	 * Retourne le score de l'ï¿½tudiant premiï¿½re annï¿½e en fonction de la matiï¿½re
 	 * TODO
 	 * @param subject
 	 * @return le score de FirstYearStudent
@@ -279,7 +302,7 @@ public class Student extends Person {
     }
     
     /**
-     * Retourne le score de l'étudiant troisième année en fonction de la matière
+     * Retourne le score de l'ï¿½tudiant troisiï¿½me annï¿½e en fonction de la matiï¿½re
      * TODO
      * @param subject
      * @return le score de SecondYearStudent / ThirdYearStudent
@@ -326,7 +349,7 @@ public class Student extends Person {
      * TODO
      * @param s2
      * @param subject
-     * @return le poids de l'arête (Student, s2)
+     * @return le poids de l'arï¿½te (Student, s2)
      */
 	public int calculPoid(Student s2, Subject subject) {
         //on part du principe que cette fonction s'execute depuis un Ã©lÃ¨ve de 1Ã¨re annÃ©e

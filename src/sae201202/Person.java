@@ -2,6 +2,7 @@ package sae201202;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 /**
  * 
@@ -30,7 +31,7 @@ public abstract class Person {
 		this.name = name;
 		this.forename = forename;
 		this.birthDate = birthDate;
-		this.age = Period.between(birthDate,LocalDate.now()).getYears();
+		this.setAge();
 		this.ID = setID(name, forename);
 		this.passWord = passWord;
 		this.mail = setMail(name, forename);
@@ -56,8 +57,8 @@ public abstract class Person {
 		return age;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setAge() {
+		this.age = (int) birthDate.until(LocalDate.now(), ChronoUnit.YEARS);;
 	}
 
 	public void setPassWord(String passWord) {
@@ -73,6 +74,6 @@ public abstract class Person {
 	public abstract String setID(String name, String forename);
 	
 	public String toString() {
-		return name + ' ' + forename + "(" + age + ") : " + "ID : " + ID + ", mail : " + mail; 
+		return name + ' ' + forename + " (" + age + ") : " + "ID : " + ID + ", mail : " + mail; 
 	}
 }
