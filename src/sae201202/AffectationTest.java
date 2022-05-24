@@ -1,6 +1,8 @@
 package sae201202;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,7 +17,8 @@ class AffectationTest {
 	
 	private Map<Subject, Double> Cgrades;
 	private Map<Subject, Double> Dgrades;
-	private Student s1, s2;
+	private Map<Subject, Double> Mgrades;
+	private Student s1, s2, s3;
 	private List<Student> studentList;
 	private Affectation a1;
 	
@@ -29,6 +32,10 @@ class AffectationTest {
 		s2 = new ThirdYearStudent("LEFEBVRE", "Daniel", LocalDate.of(2001, 10, 31), 3, 'M', Motivation.AVERAGE_MOTIVATION, 0, Dgrades, true);
 		s2.getGrades().put(Subject.ALGO, 15.9);
 		
+		Mgrades = new HashMap<Subject,Double>();
+		s3 = new FirstYearStudent("BARRE", "Madeleine", LocalDate.of(2003, 2, 28), 1, 'B', Motivation.NO_MOTIVATION, 3, Mgrades);
+		s3.getGrades().put(Subject.ALGO, 6.9);
+		
 		studentList = new ArrayList<Student>();
 		a1 = new Affectation();
     }
@@ -37,9 +44,25 @@ class AffectationTest {
 	@Test
 	void test() {
 		studentList.add(s1);studentList.add(s2);
+		assertTrue(a1.getFirstYear().isEmpty());
+		assertTrue(a1.getThirdSecondYear().isEmpty());
+		
 		a1.fillStudentsLists(studentList);
-		assertEquals(1, Cgrades.size());
 		assertEquals(s1, a1.getFirstYear().get(0));
+		
+		studentList.add(s3);
+		assertEquals(a1.getFirstYear().size(), a1.mostPopulated());
+		
+		a1 = new Affectation();
+		a1.fillStudentsLists(studentList);
+		a1.addNodes(studentList);
+		assertFalse(a1.haveBot());
+		
+		a1 = new Affectation();
+		a1.prepaList(studentList);
+		a1.addNodes(studentList);
+		assertTrue(a1.haveBot());
+		
 	}
 
 }
