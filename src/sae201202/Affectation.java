@@ -224,7 +224,7 @@ public class Affectation {
     	List<Student> tri = new ArrayList<Student>();
     	//liste des plus petits poid de chaque firstyear
     	List<Integer> minPoid = new ArrayList<Integer>();
-    	//ajout de tout les poid d'un firstyear avec tous les third et second year
+    	//ajout de tout les poid d'un firstyear avec tous les third et second year et pour chaque matière
     	for(int i = 0; i < firstYear.size(); i ++) {
     		List<Integer> poid = new ArrayList<Integer>();
     		for(int j = 0; j < thirdSecondYear.size(); j ++) {
@@ -234,9 +234,8 @@ public class Affectation {
             	}
     		}
     		//cherche le plus petit poid du firstyear vers les tuteurs et l'ajoute à la liste
-    		List<Integer> sortedList = new ArrayList<>(poid);
-            Collections.sort(sortedList);
-            minPoid.add(sortedList.get(0));
+            Collections.sort(poid);
+            minPoid.add(poid.get(0));
     	}
     	//on cherche l'indice du int le plus petit et on le supprime de firstyear pour l'ajouter dans la liste tri�
     	int idx = 0;
@@ -258,9 +257,11 @@ public class Affectation {
     public List<Student> getBotAffectation(CalculAffectation<Student> c) {
     	List<Student> result = new ArrayList<Student>();
     	for (int i = 0 ; i < c.getAffectation().size(); i = i+1) {
-    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && c.getAffectation().get(i).getExtremite2().getName().equals("FAUX")) {
+    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && 
+    				c.getAffectation().get(i).getExtremite2().getName().equals("FAUX")) {
     			result.add(c.getAffectation().get(i).getExtremite1());
-    		} else if (c.getAffectation().get(i).getExtremite2().isThirdYear() && c.getAffectation().get(i).getExtremite1().getName().equals("FAUX")) {
+    		} else if (c.getAffectation().get(i).getExtremite2().isThirdYear() && 
+    				c.getAffectation().get(i).getExtremite1().getName().equals("FAUX")) {
     			result.add(c.getAffectation().get(i).getExtremite2());
     		}
     	}
@@ -275,14 +276,43 @@ public class Affectation {
     public List<Student> getSeveralTutored(List<Student> botAffectation) {
     	List<Student> result = new ArrayList<Student>();
     	for(int i = 0; i < graphe.sommets().size(); i ++) {
-    		if (graphe.sommets().get(i).isThirdYear() && graphe.sommets().get(i).doesAcceptSeveralTutored()) {
-    			if(result.size() < botAffectation.size()) {
-    				result.add(graphe.sommets().get(i));
-    			}
+    		if (graphe.sommets().get(i).isThirdYear() && 
+    				graphe.sommets().get(i).doesAcceptSeveralTutored() && 
+    				result.size() < botAffectation.size()) {
+    			result.add(graphe.sommets().get(i));
     		}
     	}
     	return result;
     }
+    
+    public static List<Arete<Student>> severalAffectation(Affectation affectationPrincipale, Affectation, List <Student> studentList) {
+    	List<Arete<Student>> listeArete = new ArrayList<Arete<Student>>();
+		do {
+			List<Student> botAffectation = new ArrayList<Student>();
+			List<Student> severalAffectation = new ArrayList<Student>();
+			Affectation C = new Affectation();
+			
+			botAffectation = B.getBotAffectation(B.getCalcul());
+			severalAffectation = affectationPrincipale.getSeveralTutored(botAffectation);
+			studentList.clear();
+			studentList.addAll(botAffectation);
+			studentList.addAll(severalAffectation);
+			
+			C.prepaList(studentList);
+			
+			C.addNodes(studentList);
+			C.addEdges();
+			
+			CalculAffectation<Student> calculSeveralTutored = new CalculAffectation<Student>(C.graphe, C.getFirstYear(), C.getThirdSecondYear());
+			calculSeveralTutored.getAffectation();
+			listeArete.addAll(C.getListArete(calculSeveralTutored)); 
+			B = C;
+			B.setCalcul(calculSeveralTutored);
+			
+		} while(B.haveBot());
+		return listeArete;
+    }
+    
     /**
      * Initialise les listes
      * @param studentList
@@ -315,7 +345,8 @@ public class Affectation {
     public List<Arete<Student>> getListArete(CalculAffectation<Student> c) {
     	List<Arete<Student>> result = new ArrayList<Arete<Student>>();
     	for (int i = 0 ; i < c.getAffectation().size(); i = i+1) {
-    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && !(c.getAffectation().get(i).getExtremite2().getName().equals("FAUX"))) {
+    		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && 
+    				!(c.getAffectation().get(i).getExtremite2().getName().equals("FAUX"))) {
     			//ajout des aretes qui ne comporte pas de bot
     			result.add(graphe.getArete(c.getAffectation().get(i).getExtremite1(), c.getAffectation().get(i).getExtremite2()));
     		}
@@ -323,11 +354,16 @@ public class Affectation {
     	
     	return result;
     }
-    
+    /**
+     * Retourne une liste d'arete ne comprenant pas d'�tudiant fictif
+     * @param l List<Arete<Student>> 
+     * @return une liste d'arete ne comprenant pas d'�tudiant fictif
+     */
     public List<Arete<Student>> getListArete(List<Arete<Student>> l) {
     	List<Arete<Student>> result = new ArrayList<Arete<Student>>();
     	for (int i = 0 ; i < l.size(); i = i+1) {
-    		if(l.get(i).getExtremite1().isFirstYear() && !(l.get(i).getExtremite2().getName().equals("FAUX"))) {
+    		if(l.get(i).getExtremite1().isFirstYear() && 
+    				!(l.get(i).getExtremite2().getName().equals("FAUX"))) {
     			//ajout des aretes qui ne comporte pas de bot
     			result.add(graphe.getArete(l.get(i).getExtremite1(), l.get(i).getExtremite2()));
     		}
@@ -336,6 +372,12 @@ public class Affectation {
     	return result;
     }
     
+    /**
+     * Evite l'affectation entre l'étudiant s1 et s2
+     * @param s1(student)
+     * @param s2(student)
+     * @return List(Arete<Student>) liste des arêtes ne contenant pas l'affectation s1 -> s2
+     */
     public List<Arete<Student>> eviterAffectation(Student s1, Student s2) {
     	List<Arete<Student>> result = new ArrayList<Arete<Student>>();
     	//on parcours le tableau de l'affectation qui comporte des aretes
@@ -362,9 +404,28 @@ public class Affectation {
     			result.add(c.getAffectation().get(i));
     		}
     	}
-    	
     	return result;
     }
     
+    /**
+     * Retourne la liste des 1ère année avec leur attribut isTutoredBy mis à jour.
+     * @param listeArete: la liste des arrêtes de l'affectation
+     * @return List(FirstYearStudent): liste de première année.
+     */
+    public static List<FirstYearStudent> isTutoredBy(List<Arete<Student>> listeArete) {
+    	List<FirstYearStudent> list = new ArrayList<FirstYearStudent>();
+    	for(int i = 0; i < listeArete.size(); i ++) {
+    		//vérification s'il est bien un 1ère année
+    		if(listeArete.get(i).getExtremite1().isFirstYear()) {
+    			//downcast pour avoir accès à l'attribut
+    			FirstYearStudent student = (FirstYearStudent) listeArete.get(i).getExtremite1();
+    			//modification de l'attribut
+    			student.setIsTutoredBy(listeArete.get(i).getExtremite2());
+    			//ajout de l'étudiant
+    			list.add(student);
+    		}
+    	}
+    	return list;
+    }
   
 }

@@ -105,37 +105,15 @@ public class UseAffectation {
 		B = A;
 		B.setCalcul(calculNormal);
 		
-		List<Arete<Student>> listeArete = new ArrayList<Arete<Student>>();
-		
-		do {
-			botAffectation.clear();
-			severalAffectation.clear();
-			Affectation C = new Affectation();
-			
-			botAffectation = B.getBotAffectation(B.getCalcul());
-			severalAffectation = A.getSeveralTutored(botAffectation);
-			studentList.clear();
-			studentList.addAll(botAffectation);
-			studentList.addAll(severalAffectation);
-			
-			C.prepaList(studentList);
-			
-			C.addNodes(studentList);
-			C.addEdges();
-			
-			CalculAffectation<Student> calculSeveralTutored = new CalculAffectation<Student>(C.graphe, C.getFirstYear(), C.getThirdSecondYear());
-			calculSeveralTutored.getAffectation();
-			listeArete.addAll(C.getListArete(calculSeveralTutored)); 
-			B = C;
-			B.setCalcul(calculSeveralTutored);
-			
-			
-		} while(B.haveBot());
+		List<Arete<Student>> listeArete = Affectation.severalAffectation(A, B, studentList);
 		
 		//A.getListArete(A.eviterAffectation(Honore, Sophie)
 		//A.getListArete(calculNormal)
 		listeArete.addAll(A.getListArete(A.getListArete(A.eviterAffectation(Sabine, Laure))));
 		listeArete.addAll(Forced.getListArete(calculForced));
+		
+		
+		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
 		display(listeArete);
 	}
 }
