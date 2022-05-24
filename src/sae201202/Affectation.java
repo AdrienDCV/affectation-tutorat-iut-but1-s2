@@ -102,7 +102,7 @@ public class Affectation {
 		//ajout des bots dans la liste des 1A
 		if(firstYear.size() != mostPopulated()) {
 			for(int i=firstYear.size(); i<mostPopulated(); i++) {
-				firstYear.add(new FirstYearStudent("FAUX", "Profil", LocalDate.of(2000, 01, 01), "---", "---", "---",
+				firstYear.add(new FirstYearStudent("FAUX", "Profil", LocalDate.of(2000, 01, 01), "-", "-", "-",
 						1, '-', Motivation.UNKNOWN, 1000, new HashMap<Subject, Double>()));
 			}
 		}
@@ -285,15 +285,16 @@ public class Affectation {
     	return result;
     }
     
-    public static List<Arete<Student>> severalAffectation(Affectation affectationPrincipale, Affectation, List <Student> studentList) {
+    public List<Arete<Student>> severalAffectation() {
     	List<Arete<Student>> listeArete = new ArrayList<Arete<Student>>();
+		List<Student> severalAffectation = this.getSeveralTutored(thirdSecondYear);
+		List<Student> studentList = new ArrayList<Student>();
+		Affectation B = this;
 		do {
-			List<Student> botAffectation = new ArrayList<Student>();
-			List<Student> severalAffectation = new ArrayList<Student>();
 			Affectation C = new Affectation();
+			List<Student> botAffectation = new ArrayList<Student>();
 			
 			botAffectation = B.getBotAffectation(B.getCalcul());
-			severalAffectation = affectationPrincipale.getSeveralTutored(botAffectation);
 			studentList.clear();
 			studentList.addAll(botAffectation);
 			studentList.addAll(severalAffectation);
@@ -376,7 +377,7 @@ public class Affectation {
      * Evite l'affectation entre l'étudiant s1 et s2
      * @param s1(student)
      * @param s2(student)
-     * @return List(Arete<Student>) liste des arêtes ne contenant pas l'affectation s1 -> s2
+     * @return List(Arete<Student>) liste des arêtes ne contenant pas l'affectation s1 > s2
      */
     public List<Arete<Student>> eviterAffectation(Student s1, Student s2) {
     	List<Arete<Student>> result = new ArrayList<Arete<Student>>();

@@ -25,8 +25,7 @@ public class UseAffectation {
 	
 	public static void main(String[] args) {
 		// creation of examples of 1st year Students 
-		Map<Subject, Double> Cgrades = new HashMap<Subject,Double>();
-						     
+		Map<Subject, Double> Cgrades = new HashMap<Subject,Double>();			     
 		Student Claude = new FirstYearStudent("ALLARD", "Claude", LocalDate.of(2003,10,6), 1, 'A', Motivation.HIGH_MOTIVATION, 0, Cgrades);
 		Claude.getGrades().put(Subject.ALGO, 7.8);
 		
@@ -105,7 +104,7 @@ public class UseAffectation {
 		B = A;
 		B.setCalcul(calculNormal);
 		
-		List<Arete<Student>> listeArete = Affectation.severalAffectation(A, B, studentList);
+		List<Arete<Student>> listeArete = A.severalAffectation();
 		
 		//A.getListArete(A.eviterAffectation(Honore, Sophie)
 		//A.getListArete(calculNormal)
