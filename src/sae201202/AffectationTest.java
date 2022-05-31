@@ -40,18 +40,40 @@ class AffectationTest {
 		a1 = new Affectation();
     }
 	
-	
 	@Test
-	void test() {
+	void getterTest() {
 		studentList.add(s1);studentList.add(s2);
 		assertTrue(a1.getFirstYear().isEmpty());
 		assertTrue(a1.getThirdSecondYear().isEmpty());
 		
+		assertEquals(new ArrayList<Student>(), a1.getFirstYear());
+		assertEquals(new ArrayList<Student>(), a1.getThirdSecondYear());
+	}
+	
+	void listTest() {
+		studentList = new ArrayList<Student>();
+		a1 = new Affectation();
+		studentList.add(s1);studentList.add(s2);
+		
 		a1.fillStudentsLists(studentList);
 		assertEquals(s1, a1.getFirstYear().get(0));
+		assertEquals(2, a1.getFirstYear().size());
+	}
+	
+	void thirdYearTest() {
+		studentList = new ArrayList<Student>();
+		a1 = new Affectation();
+		studentList.add(s1);studentList.add(s2);studentList.add(s3);
+		a1.fillStudentsLists(studentList);
 		
-		studentList.add(s3);
+		assertEquals(2, a1.getFirstYear().size());
+		assertEquals(1, a1.getThirdSecondYear().size());
 		assertEquals(a1.getFirstYear().size(), a1.mostPopulated());
+	}
+	
+	void botTest() {
+		studentList = new ArrayList<Student>();
+		studentList.add(s1);studentList.add(s2);studentList.add(s3);
 		
 		a1 = new Affectation();
 		a1.fillStudentsLists(studentList);
@@ -62,7 +84,6 @@ class AffectationTest {
 		a1.prepaList(studentList);
 		a1.addNodes(studentList);
 		assertTrue(a1.haveBot());
-		
 	}
 
 }

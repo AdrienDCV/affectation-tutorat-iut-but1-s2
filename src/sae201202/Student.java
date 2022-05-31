@@ -58,7 +58,7 @@ public class Student extends Person {
 	}
 	
 	public Student (String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
-		super(name, forename, null, null);
+		super(name, forename, birthDate, null);
 		try {
 			this.setScholarYear(scholarYear);
 		} catch (WrongScholarYearException e) {
