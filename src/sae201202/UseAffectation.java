@@ -21,8 +21,27 @@ public class UseAffectation {
 		   }
 	}
 	
+	public static void scenario1() {
+		List<Student> studentList = new ArrayList<Student>();
+		SaveData.loadData(studentList, "./F-G5/res/save/scenario1.json");
+		Affectation A = new Affectation();
+		
+		A.prepaList(studentList);
+		A.affectationForce(studentList.get(0), studentList.get(5), studentList);
+		A.affectation(studentList);
+		
+		List<Arete<Student>> listeArete = A.severalAffectation();
+		listeArete.addAll(A.getListArete(A.getListArete(A.eviterAffectation(studentList.get(2), studentList.get(7)))));
+		if(!A.getForcedFirstYear().isEmpty() && !A.getThirdSecondYear().isEmpty()) {
+			listeArete.addAll(A.getListForcedArete(A.getForcedCalcul()));
+		}
+		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
+		System.out.println(list);
+		display(listeArete);
+	}
+	
 	public static void main(String[] args) {
-		// creation of examples of 1st year Students 
+		/*// creation of examples of 1st year Students 
 		Map<Subject, Double> Cgrades = new HashMap<Subject,Double>();			     
 		Student Claude = new FirstYearStudent("ALLARD", "Claude", LocalDate.of(2003,10,6), 1, 'A', Motivation.HIGH_MOTIVATION, 0, null, Cgrades);
 		Claude.getGrades().put(Subject.ALGO, 7.8);
@@ -61,7 +80,7 @@ public class UseAffectation {
         Laure.getGrades().put(Subject.ALGO, 17.3); 
 
 		
-		//
+		
 		List<Student> studentList = new ArrayList<Student>();
 		studentList.add(Claude);
 		studentList.add(Madeleine);
@@ -92,6 +111,7 @@ public class UseAffectation {
 		
 		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
 		System.out.println(list);
-		display(listeArete);
+		display(listeArete);*/
+		scenario1();
 	}
 }

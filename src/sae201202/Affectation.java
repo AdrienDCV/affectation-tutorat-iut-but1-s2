@@ -60,6 +60,19 @@ public class Affectation {
 		return thirdSecondYear;
 	}
 	
+	public List<Student> getForcedFirstYear() {
+		return forcedFirstYear;
+	}
+	
+	/**
+	 * Retourne la liste des troisi�mes ann�es
+	 * TODO
+	 * @return la valeur de la liste thirdYear
+	 */
+	public List<Student> getForcedThirdSecondYear() {
+		return forcedThirdSecondYear;
+	}
+	
 	/**
      * Change l'attribut Calcul
      * @param c

@@ -14,7 +14,7 @@ class SecondYearStudentTest {
 	@BeforeEach
 	 public void initialization() {
 		s1 = new SecondYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), 2, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>());
-		s2 = new SecondYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), "1234","passwd","dacostaveiga.etu@univ-lille.fr", 2, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>());
+		s2 = new SecondYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), "1234","passwd","dacostaveiga.etu@univ-lille.fr", 2, 'F', Motivation.HIGH_MOTIVATION, 0, null, new HashMap<Subject, Double>());
 
 
 	}

@@ -78,19 +78,46 @@ public class SaveData implements Serializable {
 				 for(int j = 0; j < content.getJSONObject(i).getJSONArray("grades1").length(); j ++) {
 					 grades.put(Subject.valueOf(content.getJSONObject(i).getJSONArray("grades1").get(j).toString()), content.getJSONObject(i).getJSONArray("grades2").getDouble(j));
 				 }
-				 
-				 Student s = new Student(content.getJSONObject(i).getString("name"),
-						 				 content.getJSONObject(i).getString("forename"),
-						 				 loadLocaldate(content.getJSONObject(i).getString("birthDate")),
-						 				 content.getJSONObject(i).getInt("scholarYear"),
-						 				 (char) content.getJSONObject(i).getInt("group"),
-						 				 Motivation.valueOf(content.getJSONObject(i).getString("motivation")),
-						 				 content.getJSONObject(i).getInt("absence"),
-						 				 grades);
-				 
-				 s.acceptsSeveralTutored = content.getJSONObject(i).getBoolean("acceptsSeveralTutored");
-				 //System.out.println(loadDate(content.getJSONObject(i).getString("birthDate")));
-				 studentList.add(s);
+				 if (content.getJSONObject(i).getInt("scholarYear") == 1) {
+					 Student s = new FirstYearStudent(content.getJSONObject(i).getString("name"),
+			 				 content.getJSONObject(i).getString("forename"),
+			 				 loadLocaldate(content.getJSONObject(i).getString("birthDate")),
+			 				 content.getJSONObject(i).getInt("scholarYear"),
+			 				 (char) content.getJSONObject(i).getInt("group"),
+			 				 Motivation.valueOf(content.getJSONObject(i).getString("motivation")),
+			 				 content.getJSONObject(i).getInt("absence"), 
+			 				 null,
+			 				 grades);
+	 
+					 s.acceptsSeveralTutored = content.getJSONObject(i).getBoolean("acceptsSeveralTutored");
+					 //System.out.println(loadDate(content.getJSONObject(i).getString("birthDate")));
+					 studentList.add(s);
+				 } else if (content.getJSONObject(i).getInt("scholarYear") == 2) {
+					 Student s = new SecondYearStudent(content.getJSONObject(i).getString("name"),
+			 				 content.getJSONObject(i).getString("forename"),
+			 				 loadLocaldate(content.getJSONObject(i).getString("birthDate")),
+			 				 content.getJSONObject(i).getInt("scholarYear"),
+			 				 (char) content.getJSONObject(i).getInt("group"),
+			 				 Motivation.valueOf(content.getJSONObject(i).getString("motivation")),
+			 				 content.getJSONObject(i).getInt("absence"),
+			 				 grades);
+	 
+					 s.acceptsSeveralTutored = content.getJSONObject(i).getBoolean("acceptsSeveralTutored");
+					 //System.out.println(loadDate(content.getJSONObject(i).getString("birthDate")));
+					 studentList.add(s);
+				 } else if (content.getJSONObject(i).getInt("scholarYear") == 3) {
+					 Student s = new ThirdYearStudent(content.getJSONObject(i).getString("name"),
+			 				 content.getJSONObject(i).getString("forename"),
+			 				 loadLocaldate(content.getJSONObject(i).getString("birthDate")),
+			 				 content.getJSONObject(i).getInt("scholarYear"),
+			 				 (char) content.getJSONObject(i).getInt("group"),
+			 				 Motivation.valueOf(content.getJSONObject(i).getString("motivation")),
+			 				 content.getJSONObject(i).getInt("absence"),
+			 				 grades, 
+			 				 content.getJSONObject(i).getBoolean("acceptsSeveralTutored"));
+					 //System.out.println(loadDate(content.getJSONObject(i).getString("birthDate")));
+					 studentList.add(s);
+				 }
 				 
 			 }
 		 } catch (IOException e) {
