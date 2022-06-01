@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import fr.ulille.but.sae2_02.graphes.Arete;
-import fr.ulille.but.sae2_02.graphes.CalculAffectation;
 
 /**
  * 
@@ -17,7 +16,6 @@ import fr.ulille.but.sae2_02.graphes.CalculAffectation;
 public class UseAffectation {
 	
 	public static void display(List<Arete<Student>> liste) {
-		   String string = ""; 
 		   for(int i=0; i<liste.size(); i++) {
 			   System.out.println(liste.get(i).getExtremite1().getName() + " " + liste.get(i).getExtremite1().getForename() + " est affecté(e) à : " + liste.get(i).getExtremite2().getName() + " " + liste.get(i).getExtremite2().getForename());
 		   }
@@ -65,8 +63,6 @@ public class UseAffectation {
 		
 		//
 		List<Student> studentList = new ArrayList<Student>();
-		List<Student> botAffectation = new ArrayList<Student>();
-		List<Student> severalAffectation = new ArrayList<Student>();
 		studentList.add(Claude);
 		studentList.add(Madeleine);
 		studentList.add(Sabine);
@@ -78,41 +74,24 @@ public class UseAffectation {
 		studentList.add(Laure);
 		
 		Affectation A = new Affectation();
-		//affectation plusieurs tutorant pour un 3e année
-		Affectation B = new Affectation();
-		//affectation forcé
-		Affectation Forced = new Affectation();
-		
 		
 		A.prepaList(studentList);
-		
-		Forced.affectationForce(Claude, Paul, A, studentList);
 
-		A.addNodes(studentList);
-		A.addEdges();
+		A.affectationForce(Claude, Paul, studentList);
+
+		A.getForcedCalcul().getAffectation();
 		
-		CalculAffectation<Student> calculNormal = new CalculAffectation<Student>(A.graphe, A.getFirstYear(), A.getThirdSecondYear());
-		CalculAffectation<Student> calculForced = new CalculAffectation<Student>(Forced.graphe, Forced.getFirstYear(), Forced.getThirdSecondYear());
-		
-		A.setCalcul(calculNormal);
-		
-		
-		System.out.println(calculNormal.getAffectation());
-		calculForced.getAffectation();
-		
-		
-		B = A;
-		B.setCalcul(calculNormal);
+		A.affectation(studentList);
 		
 		List<Arete<Student>> listeArete = A.severalAffectation();
 		
-		//A.getListArete(A.eviterAffectation(Honore, Sophie)
-		//A.getListArete(calculNormal)
 		listeArete.addAll(A.getListArete(A.getListArete(A.eviterAffectation(Sabine, Laure))));
-		listeArete.addAll(Forced.getListArete(calculForced));
+		
+		listeArete.addAll(A.getListForcedArete(A.getForcedCalcul()));
 		
 		
 		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
+		System.out.println(list);
 		display(listeArete);
 	}
 }

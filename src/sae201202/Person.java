@@ -1,7 +1,6 @@
 package sae201202;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -55,6 +54,10 @@ public abstract class Person {
 
 	public int getAge() {
 		return age;
+	}
+
+	public LocalDate getBirthDate() {
+		return birthDate;
 	}
 
 	public void setAge() {
