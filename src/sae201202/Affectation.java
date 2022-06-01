@@ -129,7 +129,7 @@ public class Affectation {
 		if(firstYear.size() != mostPopulated()) {
 			for(int i=firstYear.size(); i<mostPopulated(); i++) {
 				firstYear.add(new FirstYearStudent("FAUX", "Profil", LocalDate.of(2000, 01, 01), "-", "-", "-",
-						1, '-', Motivation.UNKNOWN, 1000, new HashMap<Subject, Double>()));
+						1, '-', Motivation.UNKNOWN, 1000, null, new HashMap<Subject, Double>()));
 			}
 		}
 		//ajout des bots dans la liste des 3A

@@ -31,20 +31,20 @@ public class ThirdYearStudent extends Student {
 	 * @param acceptsSeveralTutored
 	 */
 	public ThirdYearStudent(String name, String forename, LocalDate birthDate, String ID, String passWord, String mail,
-							int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades, boolean acceptsSeveralTutored) {
-		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, grades, acceptsSeveralTutored);
+							int scholarYear, char group, Motivation motivation, int absence, String subjectWishes, Map<Subject, Double> grades, boolean acceptsSeveralTutored) {
+		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence,  subjectWishes,grades, acceptsSeveralTutored);
 		this.isTutorOf = new HashMap<Student, Subject>();
 	}
 
 	public ThirdYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation,
 			int absence, Map<Subject, Double> grades, boolean acceptsSeveralutored) {
-		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, grades, acceptsSeveralutored);
+		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, null, grades, acceptsSeveralutored);
 	}
 	
 	// constructeur faux-profil
 	public ThirdYearStudent(String name, String forename, LocalDate birthDate, String ID, String passWord, String mail,
 							int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
-		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, grades, false);
+		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, null, grades, false);
 		this.isTutorOf = new HashMap<Student, Subject>();
 	}
 

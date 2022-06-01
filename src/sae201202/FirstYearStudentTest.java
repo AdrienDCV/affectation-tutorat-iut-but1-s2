@@ -13,11 +13,11 @@ class FirstYearStudentTest {
 	
 	@BeforeEach
 	 public void initialization() {
-		f1 = new FirstYearStudent("DEGAND", "Adrien", LocalDate.of(2003, 5, 27), 1, 'F', 1);
-		f2 = new FirstYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), 1, 'F', 0, new HashMap<Subject, Double>());
-		f3 = new FirstYearStudent("DEGAND", "Adrien", LocalDate.of(2003, 5, 27), 1, 'F', Motivation.AVERAGE_MOTIVATION, 1);
-		f4 = new FirstYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), 1, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>());
-		f5 = new FirstYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), "1234","passwd","dacostaveiga.etu@univ-lille.fr", 1, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>());
+		f1 = new FirstYearStudent("DEGAND", "Adrien", LocalDate.of(2003, 5, 27), 1, 'F', 1, null);
+		f2 = new FirstYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), 1, 'F', 0, null, new HashMap<Subject, Double>());
+		f3 = new FirstYearStudent("DEGAND", "Adrien", LocalDate.of(2003, 5, 27), 1, 'F', Motivation.AVERAGE_MOTIVATION, 1, null);
+		f4 = new FirstYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), 1, 'F', Motivation.HIGH_MOTIVATION, 0, null, new HashMap<Subject, Double>());
+		f5 = new FirstYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), "adrien.dacostaveiga.etu","passwd","dacostaveiga.etu@univ-lille.fr", 1, 'F', Motivation.HIGH_MOTIVATION, 0, null, new HashMap<Subject, Double>());
 
 
 	}

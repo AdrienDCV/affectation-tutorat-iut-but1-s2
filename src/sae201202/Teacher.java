@@ -17,6 +17,11 @@ public class Teacher extends Person {
 	// class attributes
 	private Subject teaching;
 	private List<Student> listStudent;
+	private List<Student> listCandidate;
+	private double minGrade;
+	private int maxAbsence;
+	private Motivation minMotivation;
+	private Affectation affectation;
 	
 	/**
 	 * 
@@ -28,12 +33,30 @@ public class Teacher extends Person {
 	 * @param listStudent
 	 */
 	// constructor(s)
-	public Teacher(String name, String forename, LocalDate birthDate, String passWord, Subject teaching, List<Student> listStudent) {
+	public Teacher(String name, String forename, LocalDate birthDate, String passWord, Subject teaching, List<Student> listStudent, List<Student> listCandidate, double minGrade, int maxAbsence, Motivation minMotivation) {
 		super(name, forename, birthDate, passWord);
 		this.setMail(name, forename);
 		this.setID(name, forename);	
 		this.teaching = teaching;
 		this.listStudent = listStudent;
+		this.listCandidate = listCandidate;
+		this.minGrade = minGrade;
+		this.maxAbsence = maxAbsence;
+		this.minMotivation = minMotivation;
+		this.affectation = new Affectation();
+	}
+	
+	public Teacher(String name, String forename, LocalDate birthDate, String passWord, Subject teaching, double minGrade, int maxAbsence) {
+		super(name, forename, birthDate, passWord);
+		this.setMail(name, forename);
+		this.setID(name, forename);	 
+		this.teaching = teaching;
+		this.listStudent = new ArrayList<Student>();
+		this.listCandidate = new ArrayList<Student>();
+		this.minGrade = minGrade;
+		this.maxAbsence = maxAbsence;
+		this.minMotivation = Motivation.UNKNOWN;
+		this.affectation = new Affectation();
 	}
 	
 	public Teacher(String name, String forename, LocalDate birthDate, String passWord, Subject teaching) {
@@ -42,6 +65,11 @@ public class Teacher extends Person {
 		this.setID(name, forename);	 
 		this.teaching = teaching;
 		this.listStudent = new ArrayList<Student>();
+		this.listCandidate = new ArrayList<Student>();
+		this.minGrade = 0;
+		this.maxAbsence = Integer.MAX_VALUE;
+		this.minMotivation = Motivation.UNKNOWN;
+		this.affectation = new Affectation();
 	}
 	
 
@@ -72,6 +100,87 @@ public class Teacher extends Person {
 		return name.toLowerCase().replaceAll(" ", "")+'.'+forename.toLowerCase().replaceAll(" ", "")+"@univ-lille.fr";
 	}
 	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Student> getListStudent() {
+		return listStudent;
+	}
+
+	/**
+	 * 
+	 * @param listStudent
+	 */
+	public void setListStudent(List<Student> listStudent) {
+		this.listStudent = listStudent;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Student> getListCandidate() {
+		return listCandidate;
+	}
+
+	/**
+	 * 
+	 * @param listCandidate
+	 */
+	public void setListCandidate(List<Student> listCandidate) {
+		this.listCandidate = listCandidate;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public double getMinGrade() {
+		return minGrade;
+	}
+
+	/**
+	 * 
+	 * @param minGrade
+	 */
+	public void setMinGrade(double minGrade) {
+		this.minGrade = minGrade;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getMaxAbsence() {
+		return maxAbsence;
+	}
+
+	/**
+	 * 
+	 * @param maxAbsence
+	 */
+	public void setMaxAbsence(int maxAbsence) {
+		this.maxAbsence = maxAbsence;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Motivation getMinMotivation() {
+		return minMotivation;
+	}
+
+	/**
+	 * 
+	 * @param minMotivation
+	 */
+	public void setMinMotivation(Motivation minMotivation) {
+		this.minMotivation = minMotivation;
+	}
+
 	/**
 	 * 
 	 */
@@ -179,6 +288,7 @@ public class Teacher extends Person {
 		return l;
 	} 
 	
+	
 	/**
 	 * 
 	 * TODO
@@ -190,42 +300,4 @@ public class Teacher extends Person {
 		return l;
 	} 
 
-	public static void main(String[] args) {
-		Map<Subject, Double> Cgrades = new HashMap<Subject,Double>();
-		Student C = new FirstYearStudent("C", "C", LocalDate.of(2003,10,6), 3, 'A', Motivation.HIGH_MOTIVATION, 20, Cgrades);
-		C.getGrades().put(Subject.ALGO, 7.8);
-		
-		Map<Subject, Double> Mgrades = new HashMap<Subject,Double>();
-		Student M = new FirstYearStudent("M", "M", LocalDate.of(2003, 2, 28), 3, 'B', Motivation.NO_MOTIVATION, 3, Mgrades);
-		M.getGrades().put(Subject.ALGO, 6.9);
-		
-		Map<Subject, Double> Xgrades = new HashMap<Subject,Double>();
-		Student X = new FirstYearStudent("X", "X", LocalDate.of(2002, 5, 19), 2, 'C', Motivation.HIGH_MOTIVATION, 5, Xgrades);
-		X.getGrades().put(Subject.ALGO, 9.7);
-		
-		Map<Subject, Double> Agrades = new HashMap<Subject,Double>();
-		Student A = new FirstYearStudent("A", "A", LocalDate.of(2002, 5, 19), 1, 'C', Motivation.HIGH_MOTIVATION, 1, Agrades);
-		A.getGrades().put(Subject.ALGO, 19.7);
-		
-		Teacher Florian = new Teacher("LAFUTEUR", "Florian", LocalDate.of(1985, 01, 01), "sectionEuroGrenet", Subject.ALGO);	
-		Florian.listStudent.add(C);
-		Florian.listStudent.add(M);
-		Florian.listStudent.add(X);
-		Florian.listStudent.add(A);
-		for (int i=0; i<Florian.listStudent.size(); i++) {
-			System.out.println(Florian.listStudent.get(i).getName());
-		}
-		System.out.println("\n");
-		Florian.listStudent = Florian.sortByStudentAbsenceASC();
-		for (int i=0; i<Florian.listStudent.size(); i++) {
-			System.out.println(Florian.listStudent.get(i).getName());
-		}
-		System.out.println("\n");
-		Florian.listStudent = Florian.sortByStudentAbsenceDESC();
-		for (int i=0; i<Florian.listStudent.size(); i++) {
-			System.out.println(Florian.listStudent.get(i).getName());
-		}
-		
-	}
-	
 }

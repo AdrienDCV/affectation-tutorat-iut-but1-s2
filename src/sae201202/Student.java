@@ -2,7 +2,10 @@ package sae201202;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 
 /**
@@ -19,12 +22,14 @@ public class Student extends Person {
 	private Map<Subject, Double> grades;
 	private Motivation motivation;
 	private int absence;
+	private String subjectWished;
 	private int score = 0;
 	protected boolean acceptsSeveralTutored;
+	private static Map<Subject, Teacher> teacherList = new HashMap<Subject, Teacher>();
 	
 
 	// constructor(s)
-	public Student (String name, String forename, LocalDate birthDate, String ID, String passWord, String mail, int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
+	public Student (String name, String forename, LocalDate birthDate, String ID, String passWord, String mail, int scholarYear, char group, Motivation motivation, int absence, String subjectWished, Map<Subject, Double> grades) {
 		super(name, forename, birthDate, passWord);
 		try {
 			this.setScholarYear(scholarYear);
@@ -36,12 +41,13 @@ public class Student extends Person {
 		this.group = group;
 		this.motivation = motivation;
 		this.absence = absence;
+		this.subjectWished = subjectWished;
 		this.grades = grades;
 		this.acceptsSeveralTutored = false;
 	}
 	
 	// constructeur spécifique aux ThirdStudentYear
-	public Student (String name, String forename, LocalDate birthDate, String ID, String passWord, String mail, int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades, boolean acceptsSeveralTutored) {
+	public Student (String name, String forename, LocalDate birthDate, String ID, String passWord, String mail, int scholarYear, char group, Motivation motivation, int absence, String subjectWished, Map<Subject, Double> grades, boolean acceptsSeveralTutored) {
 		super(name, forename, birthDate, passWord);
 		try {
 			this.setScholarYear(scholarYear);
@@ -53,6 +59,7 @@ public class Student extends Person {
 		this.group = group;
 		this.motivation = motivation;
 		this.absence = absence;
+		this.subjectWished = subjectWished;
 		this.grades = grades;
 		this.acceptsSeveralTutored = acceptsSeveralTutored;
 	}
@@ -70,6 +77,23 @@ public class Student extends Person {
 		this.motivation = motivation;
 		this.absence = absence;
 		this.grades = grades;
+		this.subjectWished = null;
+		this.acceptsSeveralTutored = false;
+	}
+	
+	public Student (String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence) {
+		super(name, forename, birthDate, null);
+		try {
+			this.setScholarYear(scholarYear);
+		} catch (WrongScholarYearException e) {
+			System.out.println("WrongScholarYearException. Merci d'entrer un num�ro compris entre 1 et 3 svp.");
+		}
+		this.setMail(name, forename); 
+		this.setID(name, forename);
+		this.group = group;
+		this.motivation = motivation;
+		this.absence = absence;
+		this.grades = new HashMap<Subject, Double>();
 		this.acceptsSeveralTutored = false;
 	}
 
@@ -194,6 +218,25 @@ public class Student extends Person {
 		return this.absence;
 	}
 
+	
+	/**
+	 * 
+	 * TODO
+	 * @return
+	 */
+	public String getSubjectWished() {
+		return subjectWished;
+	}
+
+	/**
+	 * 
+	 * TODO
+	 * @param subjectWished
+	 */
+	public void setSubjectWished(String subjectWished) {
+		this.subjectWished = subjectWished;
+	}
+
 	/**
 	 * Retourne True si l'ann�e de Student est 1
 	 * TODO
@@ -223,6 +266,23 @@ public class Student extends Person {
 	
 	public boolean doesAcceptSeveralTutored() {
 		return this.acceptsSeveralTutored;
+	}
+	
+	public void fillTeacherList(List<Teacher> tList) throws TooManyTeacherForASubjectException{
+		if (teacherList.isEmpty()) {
+			teacherList.put(tList.get(0).getTeaching(), tList.get(0));
+		} else {
+			for (int i=0; i<teacherList.size();i++) {
+				System.out.println(i);
+				if (!teacherList.entrySet().equals(tList.get(i).getTeaching())) {
+					teacherList.put(tList.get(i).getTeaching(), tList.get(i));
+				} else {
+					new TooManyTeacherForASubjectException();
+				}
+				
+			}
+		}
+		
 	}
 	
 	/**
@@ -357,5 +417,42 @@ public class Student extends Person {
         int s2Score = s2.bonusMalusThirdYear(subject);
         return Math.abs(s1Score - s2Score);
     }
-
+	
+	public void applyAsTutor() {
+		Scanner sc = new Scanner(System.in);
+		String wishSubject = sc.next();
+		for (Map.Entry<Subject, Teacher> t : this.teacherList.entrySet()) {
+			if (t.getKey().equals(wishSubject)) {
+				if (t.getValue().getMinGrade() < this.getGrade(t.getKey()) && (t.getValue().getMaxAbsence() > this.getAbsence())) {
+					t.getValue().getListCandidate().add(this);
+				}
+			}
+		}
+	}
+	
+	public void applyAsTutor(String subject) {
+		for (Map.Entry<Subject, Teacher> t : this.teacherList.entrySet()) {
+			if (t.getKey().equals(Subject.valueOf(subject))) {
+				if (t.getValue().getMinGrade() < this.getGrade(t.getKey()) && (t.getValue().getMaxAbsence() > this.getAbsence())) {
+					t.getValue().getListCandidate().add(this);
+				}
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		Teacher Florian = new Teacher("LAFUTEUR", "Florian", LocalDate.of(1985, 1, 1), "sectionEuroGrenet", Subject.ALGO);
+		System.out.println(Florian);
+		Student Adrien = new Student("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), 1, 'F', Motivation.HIGH_MOTIVATION, 0);
+		List tList = new ArrayList<Teacher>();
+		tList.add(Florian);
+		System.out.println(tList);
+		try {
+			Adrien.fillTeacherList(tList);
+			System.out.println(Adrien.teacherList);
+		} catch (TooManyTeacherForASubjectException e){
+			System.out.println("TooManyTeacherForASubhectException. Trop d'enseignants pour une ressource."); ;
+		}
+		
+	}
 }

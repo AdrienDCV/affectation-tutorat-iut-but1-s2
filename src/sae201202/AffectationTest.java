@@ -25,7 +25,7 @@ class AffectationTest {
 	@BeforeEach
 	 public void initialization() {
 		Cgrades = new HashMap<Subject,Double>();
-		s1 = new FirstYearStudent("ALLARD", "Claude", LocalDate.of(2003,10,6), 1, 'A', Motivation.HIGH_MOTIVATION, 0, Cgrades);
+		s1 = new FirstYearStudent("ALLARD", "Claude", LocalDate.of(2003,10,6), 1, 'A', Motivation.HIGH_MOTIVATION, 0, null, Cgrades);
 		s1.getGrades().put(Subject.ALGO, 7.8);
 		
 		Dgrades = new HashMap<Subject,Double>();
@@ -33,7 +33,7 @@ class AffectationTest {
 		s2.getGrades().put(Subject.ALGO, 15.9);
 		
 		Mgrades = new HashMap<Subject,Double>();
-		s3 = new FirstYearStudent("BARRE", "Madeleine", LocalDate.of(2003, 2, 28), 1, 'B', Motivation.NO_MOTIVATION, 3, Mgrades);
+		s3 = new FirstYearStudent("BARRE", "Madeleine", LocalDate.of(2003, 2, 28), 1, 'B', Motivation.NO_MOTIVATION, 3, null, Mgrades);
 		s3.getGrades().put(Subject.ALGO, 6.9);
 		
 		studentList = new ArrayList<Student>();

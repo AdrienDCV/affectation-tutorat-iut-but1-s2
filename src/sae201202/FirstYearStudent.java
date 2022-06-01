@@ -16,32 +16,32 @@ public class FirstYearStudent extends Student {
 	
 	// constructor
 	public FirstYearStudent(String name, String forename, LocalDate birthDate, String ID, String passWord, String mail,
-							int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
-		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, grades);
+							int scholarYear, char group, Motivation motivation, int absence, String subjectWished, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, subjectWished, grades);
 		this.isTutoredBy = null;
 		this.subjectTutored = null;
 	}
 	
-	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
-		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, grades);
+	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence, String subjectWished, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, subjectWished, grades);
 		this.isTutoredBy = null;
 		this.subjectTutored = null;
 	}
 	
-	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence) {
-		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, new HashMap<Subject, Double>());
+	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence, String subjectWished) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, null, new HashMap<Subject, Double>());
 		this.isTutoredBy = null;
 		this.subjectTutored = null;
 	}
 	
-	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, int absence, Map<Subject, Double> grades) {
-		super(name, forename, birthDate, null, null, null, scholarYear, group, Motivation.UNKNOWN, absence, grades);
+	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, int absence, String subjectWished, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, Motivation.UNKNOWN, absence, subjectWished, grades);
 		this.isTutoredBy = null;
 		this.subjectTutored = null;
 	}
 	
-	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, int absence) {
-		super(name, forename, birthDate, null, null, null, scholarYear, group, Motivation.UNKNOWN, absence, new HashMap<Subject, Double>());
+	public FirstYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, int absence, String subjectWished) {
+		super(name, forename, birthDate, null, null, null, scholarYear, group, Motivation.UNKNOWN, absence, subjectWished, new HashMap<Subject, Double>());
 		this.isTutoredBy = null;
 		this.subjectTutored = null;
 	}

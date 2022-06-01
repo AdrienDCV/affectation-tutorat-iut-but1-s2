@@ -16,15 +16,15 @@ public class SecondYearStudent extends Student{
 	
 	// constructor(s)
 	public SecondYearStudent(String name, String forename, LocalDate birthDate, String ID, String passWord, String mail,
-							 int scholarYear, char group, Motivation motivation, int absence, Map<Subject, Double> grades) {
-		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, grades);
+							 int scholarYear, char group, Motivation motivation, int absence, String subjectWished, Map<Subject, Double> grades) {
+		super(name, forename, birthDate, ID, passWord, mail, scholarYear, group, motivation, absence, subjectWished, grades);
 		this.isTutorOf = null;
 		this.subjectTutord = null;
 	}
 
 	public SecondYearStudent(String name, String forename, LocalDate birthDate, int scholarYear, char group, Motivation motivation, int absence,
 							 Map<Subject, Double> grades) {
-		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, grades);
+		super(name, forename, birthDate, null, null, null, scholarYear, group, motivation, absence, null, grades);
 		this.isTutorOf = null;
 		this.subjectTutord = null;
 	}

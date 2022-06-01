@@ -24,23 +24,23 @@ public class UseAffectation {
 	public static void main(String[] args) {
 		// creation of examples of 1st year Students 
 		Map<Subject, Double> Cgrades = new HashMap<Subject,Double>();			     
-		Student Claude = new FirstYearStudent("ALLARD", "Claude", LocalDate.of(2003,10,6), 1, 'A', Motivation.HIGH_MOTIVATION, 0, Cgrades);
+		Student Claude = new FirstYearStudent("ALLARD", "Claude", LocalDate.of(2003,10,6), 1, 'A', Motivation.HIGH_MOTIVATION, 0, null, Cgrades);
 		Claude.getGrades().put(Subject.ALGO, 7.8);
 		
 		Map<Subject, Double> Mgrades = new HashMap<Subject,Double>();
-		Student Madeleine = new FirstYearStudent("BARRE", "Madeleine", LocalDate.of(2003, 2, 28), 1, 'B', Motivation.NO_MOTIVATION, 3, Mgrades);
+		Student Madeleine = new FirstYearStudent("BARRE", "Madeleine", LocalDate.of(2003, 2, 28), 1, 'B', Motivation.NO_MOTIVATION, 3, null, Mgrades);
 		Madeleine.getGrades().put(Subject.ALGO, 6.9);
 		
 		Map<Subject, Double> Sgrades = new HashMap<Subject,Double>();
-		Student Sabine = new FirstYearStudent("BESNARD", "Sabine", LocalDate.of(2002, 5, 19), 1, 'C', Motivation.HIGH_MOTIVATION, 5, Sgrades);
+		Student Sabine = new FirstYearStudent("BESNARD", "Sabine", LocalDate.of(2002, 5, 19), 1, 'C', Motivation.HIGH_MOTIVATION, 5, null, Sgrades);
 		Sabine.getGrades().put(Subject.ALGO, 9.7);
 		
 		Map<Subject, Double> Hgrades = new HashMap<Subject,Double>();
-		Student Honore = new FirstYearStudent("MARTEL", "Honoré", LocalDate.of(2001, 11, 11), 1, 'D', Motivation.LOW_MOTIVATION, 1, Hgrades);
+		Student Honore = new FirstYearStudent("MARTEL", "Honoré", LocalDate.of(2001, 11, 11), 1, 'D', Motivation.LOW_MOTIVATION, 1, null, Hgrades);
 		Honore.getGrades().put(Subject.ALGO, 11.7);
 		
 		Map<Subject, Double> Agrades = new HashMap<Subject,Double>();
-		Student Aurore = new FirstYearStudent("SCHMITT", "Aurore", LocalDate.of(2002, 1, 22), 1, 'E', Motivation.AVERAGE_MOTIVATION, 1, Agrades);
+		Student Aurore = new FirstYearStudent("SCHMITT", "Aurore", LocalDate.of(2002, 1, 22), 1, 'E', Motivation.AVERAGE_MOTIVATION, 1, null, Agrades);
 		Aurore.getGrades().put(Subject.ALGO, 9.9);
 		
 		// creation of examples of 2nd  / 3rd year Students 

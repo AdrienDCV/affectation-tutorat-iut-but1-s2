@@ -17,8 +17,8 @@ class ThirdYearStudentTest {
 	@BeforeEach
 	 public void initialization() {
 		s1 = new ThirdYearStudent("DEGAND", "Adrien", LocalDate.of(2003, 5, 27), 3, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>(),false);
-		s2 = new ThirdYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), "1234","passwd","dacostaveiga.etu@univ-lille.fr", 3, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>());
-		s3 = new ThirdYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), "1234","passwd","dacostaveiga.etu@univ-lille.fr", 3, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>(), true);
+		s2 = new ThirdYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), "adrien.dacostaveiga.etu","passwd","adrien.dacostaveiga.etu@univ-lille.fr", 3, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>());
+		s3 = new ThirdYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), "adrien.dacostaveiga.etu","passwd","adrien.dacostaveiga.etu@univ-lille.fr", 3, 'F', Motivation.HIGH_MOTIVATION, 0, null, new HashMap<Subject, Double>(), true);
 		isTutorOf = new HashMap<Student,Subject>();
 		isTutorOf2 = new HashMap<Student,Subject>();
 	}
