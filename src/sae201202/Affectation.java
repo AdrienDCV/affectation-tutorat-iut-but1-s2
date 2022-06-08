@@ -295,12 +295,17 @@ public class Affectation {
     	//ajout de tout les poid d'un FirstYearStudent avec tous les ThirdYearStudent et SecondYearStudent, pour chaque matiere
     	for(int i = 0; i < firstYear.size(); i ++) {
     		List<Integer> poid = new ArrayList<Integer>();
-    		for(int j = 0; j < thirdSecondYear.size(); j ++) {
-    			for(int k= 0; k < firstYear.get(i).getSubject().size(); k ++) {
-    			   Integer n = firstYear.get(i).calculPoids(thirdSecondYear.get(j), firstYear.get(i).getSubject().get(k));
-                   poid.add(n);
-            	}
+    		if (!firstYear.get(i).getName().equals("FAUX")) {
+    			for(int j = 0; j < thirdSecondYear.size(); j ++) {
+        			for(int k= 0; k < firstYear.get(i).getSubject().size(); k ++) {
+        			   Integer n = firstYear.get(i).calculPoids(thirdSecondYear.get(j), firstYear.get(i).getSubject().get(k));
+                       poid.add(n);
+                	}
+        		}
+    		} else {
+    			poid.add(1000);
     		}
+    		
     		//cherche le plus petit poid du firstyear vers les tuteurs et l'ajoute a�la liste
             Collections.sort(poid);
             if (!poid.isEmpty()) {
@@ -309,9 +314,7 @@ public class Affectation {
     	}
     	//on cherche l'indice du int le plus petit et on le supprime de firstYear pour l'ajouter dans la liste triee
     	int idx = 0;
-    	System.out.println(minPoid.size());
-    	System.out.println(firstYear.size());
-    	while(!firstYear.isEmpty() && !minPoid.isEmpty()) {
+    	while(!firstYear.isEmpty()) {
     		idx = this.minIdxList(minPoid);
     		tri.add(firstYear.remove(idx));
     		minPoid.remove(idx);
@@ -421,7 +424,10 @@ public class Affectation {
     		if(l.get(i).getExtremite1().isFirstYear() && 
     				!(l.get(i).getExtremite2().getName().equals("FAUX"))) {
     			//ajout des aretes qui ne comporte pas de bot
-    			result.add(graph.getArete(l.get(i).getExtremite1(), l.get(i).getExtremite2()));
+    			if (!l.get(i).getExtremite1().getName().equals("FAUX")) {
+    				result.add(graph.getArete(l.get(i).getExtremite1(), l.get(i).getExtremite2()));
+    			}
+    			
     		}
     	}
     	
@@ -439,7 +445,9 @@ public class Affectation {
     		if(c.getAffectation().get(i).getExtremite1().isFirstYear() && 
     				!(c.getAffectation().get(i).getExtremite2().getName().equals("FAUX"))) {
     			//ajout des aretes qui ne comporte pas de bot
-    			result.add(graph.getArete(c.getAffectation().get(i).getExtremite1(), c.getAffectation().get(i).getExtremite2()));
+    			if (!c.getAffectation().get(i).getExtremite1().getName().equals("FAUX")) {
+    				result.add(graph.getArete(c.getAffectation().get(i).getExtremite1(), c.getAffectation().get(i).getExtremite2()));
+    			}
     		}
     	}
     	
