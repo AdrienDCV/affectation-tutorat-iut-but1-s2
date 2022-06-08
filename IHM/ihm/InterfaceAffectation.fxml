@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.ControllerAffectation">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.ControllerAffectation">
    <left>
       <VBox prefHeight="720.0" prefWidth="125.0" style="-fx-background-color: grey; -fx-border-color: black;" BorderPane.alignment="CENTER">
          <children>
@@ -65,20 +65,26 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="689.0" prefWidth="961.0" style="-fx-background-color: darkgrey;">
                      <children>
-                        <TableView layoutX="-10.0" prefHeight="593.0" prefWidth="1173.0" style="-fx-background-color: lightgrey; -fx-border-color: black;">
+                        <TableView fx:id="table" layoutX="-10.0" prefHeight="593.0" prefWidth="1173.0" style="-fx-background-color: lightgrey; -fx-border-color: black;">
                           <columns>
-                            <TableColumn prefWidth="595.0" style="-fx-border-color: black;" text="Tutorés" />
-                            <TableColumn prefWidth="594.0" style="-fx-border-color: black;" text="Tuteurs" />
+                            <TableColumn fx:id="colTutores" prefWidth="595.0" style="-fx-border-color: black;" text="Tutorés" />
+                            <TableColumn fx:id="colTuteurs" prefWidth="594.0" style="-fx-border-color: black;" text="Tuteurs" />
                           </columns>
                         </TableView>
-                        <Button layoutX="185.0" layoutY="617.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="211.0" style="-fx-background-color: white;" text="Contraintes">
+                        <Button fx:id="bCalculAffectation" layoutX="356.0" layoutY="617.0" mnemonicParsing="false" onAction="#goToCalculAffect" prefHeight="47.0" prefWidth="211.0" style="-fx-background-color: white;" text="Calculer affectation">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font></Button>
-                        <Button layoutX="554.0" layoutY="617.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="211.0" style="-fx-background-color: white;" text="Calculer affectation">
+                        <Button fx:id="bChargerAffectationAffectation" layoutX="80.0" layoutY="617.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="211.0" style="-fx-background-color: white;" text="Charger Affectation">
                            <font>
                               <Font name="System Bold" size="13.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
+                        <Button fx:id="bNouvAffectAffectation" layoutX="631.0" layoutY="617.0" mnemonicParsing="false" onAction="#goToNouvAffect" prefHeight="47.0" prefWidth="211.0" style="-fx-background-color: white;" text="Nouvelle affectation">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
             </content>

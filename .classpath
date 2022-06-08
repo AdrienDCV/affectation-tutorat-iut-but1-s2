@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="IHM"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -11,6 +12,6 @@
 	<classpathentry kind="lib" path="lib/sae2_02.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="lib/json.jar"/>
+	<classpathentry kind="lib" path="/home/infoetu/adrien.dacostaveiga.etu/SAé S2/SAé2.01-2.02/lib/json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

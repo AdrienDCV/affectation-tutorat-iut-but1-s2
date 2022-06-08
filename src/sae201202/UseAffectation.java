@@ -9,9 +9,8 @@ import java.util.Map;
 import fr.ulille.but.sae2_02.graphes.Arete;
 
 /**
- * 
  * @authors adrien.dacostaveiga & adrien.degand
- *
+ * Classe Main permettant d'exécuter le programme
  */
 public class UseAffectation {
 	
@@ -21,77 +20,81 @@ public class UseAffectation {
 		   }
 	}
 	
-	public static void main(String[] args) {
-		// creation of examples of 1st year Students 
-		Map<Subject, Double> Cgrades = new HashMap<Subject,Double>();			     
-		Student Claude = new FirstYearStudent("ALLARD", "Claude", LocalDate.of(2003,10,6), 1, 'A', Motivation.HIGH_MOTIVATION, 0, null, Cgrades);
-		Claude.getGrades().put(Subject.ALGO, 7.8);
-		
-		Map<Subject, Double> Mgrades = new HashMap<Subject,Double>();
-		Student Madeleine = new FirstYearStudent("BARRE", "Madeleine", LocalDate.of(2003, 2, 28), 1, 'B', Motivation.NO_MOTIVATION, 3, null, Mgrades);
-		Madeleine.getGrades().put(Subject.ALGO, 6.9);
-		
-		Map<Subject, Double> Sgrades = new HashMap<Subject,Double>();
-		Student Sabine = new FirstYearStudent("BESNARD", "Sabine", LocalDate.of(2002, 5, 19), 1, 'C', Motivation.HIGH_MOTIVATION, 5, null, Sgrades);
-		Sabine.getGrades().put(Subject.ALGO, 9.7);
-		
-		Map<Subject, Double> Hgrades = new HashMap<Subject,Double>();
-		Student Honore = new FirstYearStudent("MARTEL", "Honoré", LocalDate.of(2001, 11, 11), 1, 'D', Motivation.LOW_MOTIVATION, 1, null, Hgrades);
-		Honore.getGrades().put(Subject.ALGO, 11.7);
-		
-		Map<Subject, Double> Agrades = new HashMap<Subject,Double>();
-		Student Aurore = new FirstYearStudent("SCHMITT", "Aurore", LocalDate.of(2002, 1, 22), 1, 'E', Motivation.AVERAGE_MOTIVATION, 1, null, Agrades);
-		Aurore.getGrades().put(Subject.ALGO, 9.9);
-		
-		// creation of examples of 2nd  / 3rd year Students 
-		Map<Subject, Double> Pgrades = new HashMap<Subject,Double>();
-		Student Paul = new ThirdYearStudent("SANCHEZ", "Paul", LocalDate.of(2000, 6, 03), 3, 'L', Motivation.AVERAGE_MOTIVATION, 1, Pgrades, false);
-		Paul.getGrades().put(Subject.ALGO, 12.0);
-
-		Map<Subject, Double> Dgrades = new HashMap<Subject,Double>();
-		Student Daniel = new ThirdYearStudent("LEFEBVRE", "Daniel", LocalDate.of(2001, 10, 31), 3, 'M', Motivation.AVERAGE_MOTIVATION, 0, Dgrades, true);
-		Daniel.getGrades().put(Subject.ALGO, 15.9);
-
-		Map<Subject, Double> SOgrades = new HashMap<Subject,Double>();
-		Student Sophie = new SecondYearStudent("VALLEE", "Sophie", LocalDate.of(1999, 3, 24), 2, 'G', Motivation.NO_MOTIVATION, 2, SOgrades);
-		Sophie.getGrades().put(Subject.ALGO, 13.8);
-		
-		Map<Subject, Double> Lgrades = new HashMap<Subject,Double>();
-        Student Laure = new SecondYearStudent("MARTIN", "Laure", LocalDate.of(2002, 02, 02), 2, 'G', Motivation.AVERAGE_MOTIVATION, 0, Lgrades);
-        Laure.getGrades().put(Subject.ALGO, 17.3); 
-
-		
-		//
+	/**
+	 * Scénario 1 : nombre de 1ère année > 2ème+3ème année
+	 */
+	public static void scenario1() {
+		// nombre 1A > nombre 3A + 2A
 		List<Student> studentList = new ArrayList<Student>();
-		studentList.add(Claude);
-		studentList.add(Madeleine);
-		studentList.add(Sabine);
-		studentList.add(Honore);
-		studentList.add(Aurore);
-		studentList.add(Paul);
-		studentList.add(Daniel);
-		studentList.add(Sophie);
-		studentList.add(Laure);
-		
+		SaveData.loadData(studentList, "scenario1.json");
 		Affectation A = new Affectation();
 		
 		A.prepaList(studentList);
-
-		A.affectationForce(Claude, Paul, studentList);
-
-		A.getForcedCalcul().getAffectation();
-		
+		A.forcedAffectation(studentList.get(0), studentList.get(5), studentList);
 		A.affectation(studentList);
 		
 		List<Arete<Student>> listeArete = A.severalAffectation();
+		listeArete.addAll(A.getListArete(A.getListArete(A.avoidAffectation(studentList.get(2), studentList.get(7)))));
+		if(!A.getForcedFirstYear().isEmpty() && !A.getThirdSecondYear().isEmpty()) {
+			listeArete.addAll(A.getListForcedArete(A.getForcedCalcul()));
+		}
+		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
+		System.out.println(list);
+		display(listeArete);
+	}
+	
+	/**
+	 * Scénario 2 : nombre de 1ère année = 2ème+3ème année
+	 */
+	public static void scenario2() {
+		//nombre de 1A == 3A + 2A
+		List<Student> studentList = new ArrayList<Student>();
+		SaveData.loadData(studentList, "scenario2.json");
+		Affectation A = new Affectation();
+
+		A.prepaList(studentList);
+
 		
-		listeArete.addAll(A.getListArete(A.getListArete(A.eviterAffectation(Sabine, Laure))));
+		A.affectation(studentList);
 		
-		listeArete.addAll(A.getListForcedArete(A.getForcedCalcul()));
+		List<Arete<Student>> listeArete = new ArrayList<Arete<Student>>();
 		
+		listeArete.addAll(A.getListArete(A.getCalcul()));
 		
 		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
 		System.out.println(list);
 		display(listeArete);
+	}
+	
+	/**
+	 * Scénario 3 : nombre de 1ère année < 2ème+3ème année
+	 */
+	public static void scenario3() {
+		//nombre de 1A < 3A + 2A
+		List<Student> studentList = new ArrayList<Student>();
+		SaveData.loadData(studentList, "scenario3.json");
+		Affectation A = new Affectation();
+
+		A.prepaList(studentList);
+
+		
+		A.affectation(studentList);
+		
+		List<Arete<Student>> listeArete = new ArrayList<Arete<Student>>();
+		
+		listeArete.addAll(A.getListArete(A.getCalcul()));
+		
+		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
+		System.out.println(list);
+		display(listeArete);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Scénario 1 (nombre 1ère année > 3ème+2ème année): ");
+		scenario1();
+		System.out.println("\nScénario 2 (nombre 1ère année = 3�me+2ème année): ");
+		scenario2();
+		System.out.println("\nScénario 3 (nombre 1ère année < 3ème+2ème année): ");
+		scenario3();
 	}
 }

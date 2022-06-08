@@ -25,7 +25,7 @@ class AffectationTest {
 	@BeforeEach
 	 public void initialization() {
 		Cgrades = new HashMap<Subject,Double>();
-		s1 = new FirstYearStudent("ALLARD", "Claude", LocalDate.of(2003,10,6), 1, 'A', Motivation.HIGH_MOTIVATION, 0, null, Cgrades);
+		s1 = new FirstYearStudent("ALLARD", "Claude", LocalDate.of(2003,10,6), 1, 'A', Motivation.HIGH_MOTIVATION, 0, Cgrades);
 		s1.getGrades().put(Subject.ALGO, 7.8);
 		
 		Dgrades = new HashMap<Subject,Double>();
@@ -33,47 +33,38 @@ class AffectationTest {
 		s2.getGrades().put(Subject.ALGO, 15.9);
 		
 		Mgrades = new HashMap<Subject,Double>();
-		s3 = new FirstYearStudent("BARRE", "Madeleine", LocalDate.of(2003, 2, 28), 1, 'B', Motivation.NO_MOTIVATION, 3, null, Mgrades);
+		s3 = new FirstYearStudent("BARRE", "Madeleine", LocalDate.of(2003, 2, 28), 1, 'B', Motivation.NO_MOTIVATION, 3, Mgrades);
 		s3.getGrades().put(Subject.ALGO, 6.9);
 		
-		studentList = new ArrayList<Student>();
-		a1 = new Affectation();
     }
 	
 	@Test
 	void getterTest() {
+		studentList = new ArrayList<Student>();
+		a1 = new Affectation();
+		
 		studentList.add(s1);studentList.add(s2);
 		assertTrue(a1.getFirstYear().isEmpty());
 		assertTrue(a1.getThirdSecondYear().isEmpty());
 		
-		assertEquals(new ArrayList<Student>(), a1.getFirstYear());
-		assertEquals(new ArrayList<Student>(), a1.getThirdSecondYear());
 	}
 	
 	void listTest() {
 		studentList = new ArrayList<Student>();
 		a1 = new Affectation();
-		studentList.add(s1);studentList.add(s2);
 		
+		studentList.add(s1);studentList.add(s2);
 		a1.fillStudentsLists(studentList);
 		assertEquals(s1, a1.getFirstYear().get(0));
-		assertEquals(2, a1.getFirstYear().size());
-	}
-	
-	void thirdYearTest() {
-		studentList = new ArrayList<Student>();
-		a1 = new Affectation();
-		studentList.add(s1);studentList.add(s2);studentList.add(s3);
-		a1.fillStudentsLists(studentList);
 		
-		assertEquals(2, a1.getFirstYear().size());
-		assertEquals(1, a1.getThirdSecondYear().size());
+		studentList.add(s3);
 		assertEquals(a1.getFirstYear().size(), a1.mostPopulated());
 	}
 	
-	void botTest() {
+	void affectationTest() {
 		studentList = new ArrayList<Student>();
-		studentList.add(s1);studentList.add(s2);studentList.add(s3);
+		a1 = new Affectation();
+		studentList.add(s1);studentList.add(s2); studentList.add(s3);
 		
 		a1 = new Affectation();
 		a1.fillStudentsLists(studentList);
@@ -84,6 +75,6 @@ class AffectationTest {
 		a1.prepaList(studentList);
 		a1.addNodes(studentList);
 		assertTrue(a1.haveBot());
+		
 	}
-
 }

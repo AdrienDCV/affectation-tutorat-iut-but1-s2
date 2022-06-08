@@ -1,17 +1,32 @@
 package ihm;
 
+import java.time.LocalDate;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import sae201202.Subject;
+import sae201202.Teacher;
 
 public class ControllerProfil {
 	
-	@FXML Button bAccueilProfil, bListEtudProfil, bAffectationProfil, bCandidaturesProfil, bQuitter;
 	
+	@FXML Button bAccueilProfil, bListEtudProfil, bAffectationProfil, bCandidaturesProfil, bQuitter;
+	@FXML Label nameLabel, forenameLabel, idLabel, mailLabel, subjectLabel;
+	
+	public void initData(Teacher teacher) {
+		teacher = teacher;
+		nameLabel.setText(teacher.getName());
+		forenameLabel.setText(teacher.getForename());
+		idLabel.setText(teacher.getID());
+		mailLabel.setText(teacher.getMail());
+		subjectLabel.setText(teacher.getTeaching().getLabel());
+	}
 	
 	public void goToAccueil() throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("InterfaceAccueil.fxml"));	

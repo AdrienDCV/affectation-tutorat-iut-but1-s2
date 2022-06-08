@@ -14,14 +14,18 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import fr.ulille.but.sae2_02.graphes.Arete;
+
 
 public class SaveData implements Serializable {
-	
-	/**
-	 * 
-	 */
+	private final static String PATH = System.getProperty("user.dir") + File.separator + "res" + File.separator+ "save" + File.separator; 
 	private static final long serialVersionUID = 156846344;
 
+	/**
+	 * Permet de convertir une List<Student> vers un JSONArray
+	 * @param studentList
+	 * @return JSONArray
+	 */
 	private static JSONArray fromStudentToJson(List<Student> studentList) {
 		JSONArray result = new JSONArray();
 		for(Student s : studentList) {
@@ -35,12 +39,17 @@ public class SaveData implements Serializable {
 			obj.put("absence", s.getAbsence());
 			obj.put("grades1", s.getGrades().keySet());
 			obj.put("grades2", s.getGrades().values());
-			obj.put("acceptsSeveralTutored", s.doesAcceptSeveralTutored());
+			obj.put("acceptsSeveralTutored", ((ThirdYearStudent) s).doesAcceptSeveralTutored());
 			result.put(obj);
 		}
 		return result;
 	}
 	
+	/**
+	 * Permet de convertir une Affectation vers un JSONArray
+	 * @param Affectation a
+	 * @return JSONArray
+	 */
 	private static JSONArray fromAffectationToJson(Affectation a) {
 		List<Student> student = new ArrayList<Student>();
 		student.addAll(a.getFirstYear());
@@ -49,15 +58,33 @@ public class SaveData implements Serializable {
 		return result;
 	}
 	
-	public static boolean saveData(List<Student> studentList, String path) {
+	public static boolean saveData(List<Student> studentList, String fileName) {
 		JSONArray save = fromStudentToJson(studentList);
-		try(FileWriter file = new FileWriter(path)) {
+		try(FileWriter file = new FileWriter(PATH + fileName)) {
 			save.write(file);
 			file.flush();
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+	
+	public static boolean saveDataArete(List<Arete<Student>> listArete, String fileName) {
+		List<Student> studentList = new ArrayList<Student>();
+		for(int i = 0; i < listArete.size(); i ++ ){
+			studentList.add(listArete.get(i).getExtremite1());
+			studentList.add(listArete.get(i).getExtremite2());
+		}
+		return saveData(studentList, fileName);
+	}
+	
+	public static void loadDataArete(List<Arete<Student>> listArete, String fileName) {
+		List<Student> studentList = new ArrayList<Student>();
+		loadData(studentList, PATH + fileName);
+		for(int i = 0; i < studentList.size() - 1; i = i + 2) {
+			Arete<Student> arete = new Arete<Student>(studentList.get(i), studentList.get(i+1));
+			listArete.add(arete);
 		}
 	}
 	
@@ -66,10 +93,10 @@ public class SaveData implements Serializable {
 		return result;
 	}
 	
-	public static void loadData(List<Student> studentList, String path) {
+	public static void loadData(List<Student> studentList, String fileName) {
 		studentList.clear();
-		
-		File fichier = new File(path);
+		String path = System.getProperty("user.dir") + File.separator + "res" + File.separator+ "save" + File.separator; 
+		File fichier = new File(PATH + fileName);
 		JSONArray content;
 		try {
 			 content = new JSONArray(Files.readString(fichier.toPath()));
@@ -78,19 +105,44 @@ public class SaveData implements Serializable {
 				 for(int j = 0; j < content.getJSONObject(i).getJSONArray("grades1").length(); j ++) {
 					 grades.put(Subject.valueOf(content.getJSONObject(i).getJSONArray("grades1").get(j).toString()), content.getJSONObject(i).getJSONArray("grades2").getDouble(j));
 				 }
-				 
-				 Student s = new Student(content.getJSONObject(i).getString("name"),
-						 				 content.getJSONObject(i).getString("forename"),
-						 				 loadLocaldate(content.getJSONObject(i).getString("birthDate")),
-						 				 content.getJSONObject(i).getInt("scholarYear"),
-						 				 (char) content.getJSONObject(i).getInt("group"),
-						 				 Motivation.valueOf(content.getJSONObject(i).getString("motivation")),
-						 				 content.getJSONObject(i).getInt("absence"),
-						 				 grades);
-				 
-				 s.acceptsSeveralTutored = content.getJSONObject(i).getBoolean("acceptsSeveralTutored");
-				 //System.out.println(loadDate(content.getJSONObject(i).getString("birthDate")));
-				 studentList.add(s);
+				 if (content.getJSONObject(i).getInt("scholarYear") == 1) {
+					 Student s = new FirstYearStudent(content.getJSONObject(i).getString("name"),
+			 				 content.getJSONObject(i).getString("forename"),
+			 				 loadLocaldate(content.getJSONObject(i).getString("birthDate")),
+			 				 content.getJSONObject(i).getInt("scholarYear"),
+			 				 (char) content.getJSONObject(i).getInt("group"),
+			 				 Motivation.valueOf(content.getJSONObject(i).getString("motivation")),
+			 				 content.getJSONObject(i).getInt("absence"), grades);
+	 
+					 s.acceptsSeveralTutored = content.getJSONObject(i).getBoolean("acceptsSeveralTutored");
+					 //System.out.println(loadDate(content.getJSONObject(i).getString("birthDate")));
+					 studentList.add(s);
+				 } else if (content.getJSONObject(i).getInt("scholarYear") == 2) {
+					 Student s = new SecondYearStudent(content.getJSONObject(i).getString("name"),
+			 				 content.getJSONObject(i).getString("forename"),
+			 				 loadLocaldate(content.getJSONObject(i).getString("birthDate")),
+			 				 content.getJSONObject(i).getInt("scholarYear"),
+			 				 (char) content.getJSONObject(i).getInt("group"),
+			 				 Motivation.valueOf(content.getJSONObject(i).getString("motivation")),
+			 				 content.getJSONObject(i).getInt("absence"),
+			 				 grades);
+	 
+					 s.acceptsSeveralTutored = content.getJSONObject(i).getBoolean("acceptsSeveralTutored");
+					 //System.out.println(loadDate(content.getJSONObject(i).getString("birthDate")));
+					 studentList.add(s);
+				 } else if (content.getJSONObject(i).getInt("scholarYear") == 3) {
+					 Student s = new ThirdYearStudent(content.getJSONObject(i).getString("name"),
+			 				 content.getJSONObject(i).getString("forename"),
+			 				 loadLocaldate(content.getJSONObject(i).getString("birthDate")),
+			 				 content.getJSONObject(i).getInt("scholarYear"),
+			 				 (char) content.getJSONObject(i).getInt("group"),
+			 				 Motivation.valueOf(content.getJSONObject(i).getString("motivation")),
+			 				 content.getJSONObject(i).getInt("absence"),
+			 				 grades, 
+			 				 content.getJSONObject(i).getBoolean("acceptsSeveralTutored"));
+					 //System.out.println(loadDate(content.getJSONObject(i).getString("birthDate")));
+					 studentList.add(s);
+				 }
 				 
 			 }
 		 } catch (IOException e) {
@@ -98,9 +150,9 @@ public class SaveData implements Serializable {
 		}
 	}
 	
-	public static boolean saveAffectation(Affectation A, String path) {
+	public static boolean saveAffectation(Affectation A, String fileName) {
 		JSONArray save = fromAffectationToJson(A);
-		try(FileWriter file = new FileWriter(path)) {
+		try(FileWriter file = new FileWriter(PATH + fileName)) {
 			save.write(file);
 			file.flush();
 			return true;
@@ -110,11 +162,11 @@ public class SaveData implements Serializable {
 		}
 	}
 	
-	public static void loadAffectation(Affectation A, String path) {
+	public static void loadAffectation(Affectation A, String fileName) {
 		List<Student> studentList = new ArrayList<Student>();
 		List<Student> firstYear = new ArrayList<Student>();
 		List<Student> thirdSecondYear = new ArrayList<Student>();
-		loadData(studentList, path);
+		loadData(studentList, PATH + fileName);
 		for(int i = 0; i < studentList.size(); i ++) {
 			if(studentList.get(i).getScholarYear() == 1) {
 				firstYear.add(studentList.get(i));
