@@ -360,6 +360,11 @@ public class Affectation {
     	return result;
     }
     
+    /**
+     * 
+     * créer les sommets, les arêtes et le calcul d'affectation
+     * @param studentList
+     */
     public void affectation(List<Student> studentList) {
 		this.addNodes(studentList);
 		this.addEdges();

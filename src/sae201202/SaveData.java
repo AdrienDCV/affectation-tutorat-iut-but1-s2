@@ -16,7 +16,12 @@ import org.json.JSONObject;
 
 import fr.ulille.but.sae2_02.graphes.Arete;
 
-
+/**
+ * 
+ * @author adrien.dacostaveiga.etu && adrien.degand
+ * Classe d'import/export des données
+ *
+ */
 public class SaveData implements Serializable {
 	private final static String PATH = System.getProperty("user.dir") + File.separator + "res" + File.separator+ "save" + File.separator; 
 	private static final long serialVersionUID = 156846344;
@@ -58,6 +63,13 @@ public class SaveData implements Serializable {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * Sauvegarde une liste d'étudiants dans le fichier fileName
+	 * @param studentList
+	 * @param fileName
+	 * @return Boolean vrai faux si la sauvegarde n'échoue pas ou échoue
+	 */
 	public static boolean saveData(List<Student> studentList, String fileName) {
 		JSONArray save = fromStudentToJson(studentList);
 		try(FileWriter file = new FileWriter(PATH + fileName)) {
@@ -69,7 +81,13 @@ public class SaveData implements Serializable {
 			return false;
 		}
 	}
-	
+	/**
+	 * 
+	 * Sauvegarde une liste d'arêtes student dans le fichier fileName
+	 * @param listArete
+	 * @param fileName
+	 * @return Boolean vrai faux si la sauvegarde n'échoue pas ou échoue
+	 */
 	public static boolean saveDataArete(List<Arete<Student>> listArete, String fileName) {
 		List<Student> studentList = new ArrayList<Student>();
 		for(int i = 0; i < listArete.size(); i ++ ){
@@ -79,6 +97,12 @@ public class SaveData implements Serializable {
 		return saveData(studentList, fileName);
 	}
 	
+	/**
+	 * 
+	 * Charge une liste d'arêtes student depuis le fichier fileName
+	 * @param listArete
+	 * @param fileName
+	 */
 	public static void loadDataArete(List<Arete<Student>> listArete, String fileName) {
 		List<Student> studentList = new ArrayList<Student>();
 		loadData(studentList, PATH + fileName);
@@ -88,11 +112,23 @@ public class SaveData implements Serializable {
 		}
 	}
 	
+	/**
+	 * 
+	 * Change un String en Localdate
+	 * @param s
+	 * @return LocalDate date transformé
+	 */
 	private static LocalDate loadLocaldate(String s) {
 		LocalDate result = LocalDate.of( Integer.parseInt(s.substring(0, 4)), Integer.parseInt(s.substring(5, 7)), Integer.parseInt(s.substring(8, s.length())));
 		return result;
 	}
 	
+	/**
+	 * 
+	 * Charge une liste d'étudiants depuis le fichier fileName
+	 * @param studentList
+	 * @param fileName
+	 */
 	public static void loadData(List<Student> studentList, String fileName) {
 		studentList.clear();
 		String path = System.getProperty("user.dir") + File.separator + "res" + File.separator+ "save" + File.separator; 
@@ -149,7 +185,13 @@ public class SaveData implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * 
+	 * Sauvegarde une Affectation dans le fichier fileName
+	 * @param A
+	 * @param fileName
+	 * @return Boolean vrai faux si la sauvegarde n'échoue pas ou échoue
+	 */
 	public static boolean saveAffectation(Affectation A, String fileName) {
 		JSONArray save = fromAffectationToJson(A);
 		try(FileWriter file = new FileWriter(PATH + fileName)) {
@@ -161,7 +203,11 @@ public class SaveData implements Serializable {
 			return false;
 		}
 	}
-	
+	/**
+	 * Charge une Affectation depuis le fichier fileName
+	 * @param A
+	 * @param fileName
+	 */
 	public static void loadAffectation(Affectation A, String fileName) {
 		List<Student> studentList = new ArrayList<Student>();
 		List<Student> firstYear = new ArrayList<Student>();
