@@ -533,4 +533,11 @@ public class Affectation {
     	return list;
     }
   
+    public List<String> toStringAretes(List<Arete<Student>> listAretes, Teacher teacher) {
+    	List<String> res = new ArrayList<>();
+		for (int i=0; i<listAretes.size(); i++) {
+			res.add(listAretes.get(i).getExtremite1().getName()+" "+listAretes.get(i).getExtremite1().getForename()+ " ("+ listAretes.get(i).getExtremite1().getGrade(teacher.getTeaching())+ ") "+ " - " + listAretes.get(i).getExtremite2().getName()+" "+listAretes.get(i).getExtremite2().getForename()+ " ("+ listAretes.get(i).getExtremite2().getGrade(teacher.getTeaching())+ ")"); 
+		}
+    	return res;	
+    }
 }

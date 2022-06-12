@@ -23,7 +23,6 @@ import fr.ulille.but.sae2_02.graphes.Arete;
  *
  */
 public class SaveData implements Serializable {
-	private final static String PATH = System.getProperty("user.dir") + File.separator + "res" + File.separator+ "save" + File.separator; 
 	private static final long serialVersionUID = 156846344;
 
 	/**
@@ -44,7 +43,7 @@ public class SaveData implements Serializable {
 			obj.put("absence", s.getAbsence());
 			obj.put("grades1", s.getGrades().keySet());
 			obj.put("grades2", s.getGrades().values());
-			obj.put("acceptsSeveralTutored", ((ThirdYearStudent) s).doesAcceptSeveralTutored());
+			obj.put("acceptsSeveralTutored", s.doesAcceptSeveralTutored());
 			result.put(obj);
 		}
 		return result;
@@ -72,7 +71,7 @@ public class SaveData implements Serializable {
 	 */
 	public static boolean saveData(List<Student> studentList, String fileName) {
 		JSONArray save = fromStudentToJson(studentList);
-		try(FileWriter file = new FileWriter(PATH + fileName)) {
+		try(FileWriter file = new FileWriter(fileName)) {
 			save.write(file);
 			file.flush();
 			return true;
@@ -105,7 +104,7 @@ public class SaveData implements Serializable {
 	 */
 	public static void loadDataArete(List<Arete<Student>> listArete, String fileName) {
 		List<Student> studentList = new ArrayList<Student>();
-		loadData(studentList, PATH + fileName);
+		loadData(studentList, fileName);
 		for(int i = 0; i < studentList.size() - 1; i = i + 2) {
 			Arete<Student> arete = new Arete<Student>(studentList.get(i), studentList.get(i+1));
 			listArete.add(arete);
@@ -131,8 +130,7 @@ public class SaveData implements Serializable {
 	 */
 	public static void loadData(List<Student> studentList, String fileName) {
 		studentList.clear();
-		String path = System.getProperty("user.dir") + File.separator + "res" + File.separator+ "save" + File.separator; 
-		File fichier = new File(PATH + fileName);
+		File fichier = new File(fileName);
 		JSONArray content;
 		try {
 			 content = new JSONArray(Files.readString(fichier.toPath()));
@@ -194,7 +192,7 @@ public class SaveData implements Serializable {
 	 */
 	public static boolean saveAffectation(Affectation A, String fileName) {
 		JSONArray save = fromAffectationToJson(A);
-		try(FileWriter file = new FileWriter(PATH + fileName)) {
+		try(FileWriter file = new FileWriter(fileName)) {
 			save.write(file);
 			file.flush();
 			return true;
@@ -212,7 +210,7 @@ public class SaveData implements Serializable {
 		List<Student> studentList = new ArrayList<Student>();
 		List<Student> firstYear = new ArrayList<Student>();
 		List<Student> thirdSecondYear = new ArrayList<Student>();
-		loadData(studentList, PATH + fileName);
+		loadData(studentList,fileName);
 		for(int i = 0; i < studentList.size(); i ++) {
 			if(studentList.get(i).getScholarYear() == 1) {
 				firstYear.add(studentList.get(i));
@@ -226,5 +224,32 @@ public class SaveData implements Serializable {
 		A.triFirstYear();
 		A.addNodes(studentList);
 		A.addEdges();
+	}
+	
+	public static void createFile(String fileName) {
+		try{
+		      File file = new File(fileName);
+		      if(!file.exists()){
+		    	  file.createNewFile();
+		      } 
+		     }catch(Exception e){
+		      e.printStackTrace();
+		     }
+	}
+
+	public static void deleteFile(String fileName){
+	     try{
+	      File file = new File(fileName);
+	      if(file.isFile() && file.exists()){
+	    	  file.delete();
+	      } 
+	     }catch(Exception e){
+	      e.printStackTrace();
+	     }
+	}
+	
+	public static boolean exitst(String fileName) {
+		File file = new File(fileName);
+		return file.exists();
 	}
 }

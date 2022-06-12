@@ -79,6 +79,15 @@ public class Teacher extends Person {
 		this.affectation = new Affectation();
 	}
 	
+	
+	public Student getStudentByID(String ID) {
+		for (Student s : this.listStudent) {
+			if (s.getID().equals(ID)) {
+				return s;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Return la valeur de l'attribut teaching

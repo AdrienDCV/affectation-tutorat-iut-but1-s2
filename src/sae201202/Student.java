@@ -3,6 +3,7 @@ package sae201202;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -401,6 +402,10 @@ public class Student extends Person implements Serializable {
 				}
 			}
 		}
+	}
+
+	public boolean doesAcceptSeveralTutored() {
+		return this.acceptsSeveralTutored;
 	}
 
 }

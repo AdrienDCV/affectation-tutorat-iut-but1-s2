@@ -3,6 +3,7 @@ package ihm;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,10 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import sae201202.SaveData;
 
 public class ControllerAffectationFormulaire2 {
 	
 	ControllerAffectationFormulaire1 cf = new ControllerAffectationFormulaire1();
+	ControllerAffectation caffect = new ControllerAffectation();
 	
 	@FXML Button bPrecedent, bAnnuler, bSuivant, bReinitialiser;
 	@FXML Label labelEvitee = new Label();
@@ -30,8 +33,13 @@ public class ControllerAffectationFormulaire2 {
 		Parent root = FXMLLoader.load(getClass().getResource("InterfaceAffectationFormulaire3.fxml"));	
 		
 		Stage window = (Stage) bSuivant.getScene().getWindow();
-		window.setScene(new Scene(root, 1280, 720));	
+		window.setScene(new Scene(root, 435, 480));	
 	}
+	
+	public void shutDown(ActionEvent e) throws Exception {
+		((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
+	}
+	
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		cf.fillComboBoxTutore(cf.teacher.getListStudent());

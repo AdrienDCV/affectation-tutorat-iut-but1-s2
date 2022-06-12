@@ -14,12 +14,6 @@ import fr.ulille.but.sae2_02.graphes.Arete;
  */
 public class UseAffectation {
 	
-	public static void display(List<Arete<Student>> liste) {
-		   for(int i=0; i<liste.size(); i++) {
-			   System.out.println(liste.get(i).getExtremite1().getName() + " " + liste.get(i).getExtremite1().getForename() + " est affecté(e) à : " + liste.get(i).getExtremite2().getName() + " " + liste.get(i).getExtremite2().getForename());
-		   }
-	}
-	
 	/**
 	 * Scénario 1 : nombre de 1ère année > 2ème+3ème année
 	 */
@@ -40,7 +34,6 @@ public class UseAffectation {
 		}
 		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
 		System.out.println(list);
-		display(listeArete);
 	}
 	
 	/**
@@ -63,7 +56,6 @@ public class UseAffectation {
 		
 		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
 		System.out.println(list);
-		display(listeArete);
 	}
 	
 	/**
@@ -86,7 +78,6 @@ public class UseAffectation {
 		
 		List<FirstYearStudent> list = Affectation.isTutoredBy(listeArete);
 		System.out.println(list);
-		display(listeArete);
 	}
 	
 	public static void main(String[] args) {

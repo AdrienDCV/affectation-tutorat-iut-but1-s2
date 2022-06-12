@@ -1,8 +1,11 @@
 package ihm;
 
+import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -17,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import sae201202.FirstYearStudent;
 import sae201202.Motivation;
+import sae201202.SaveData;
 import sae201202.SecondYearStudent;
 import sae201202.Student;
 import sae201202.Subject;
@@ -26,10 +30,7 @@ import sae201202.ThirdYearStudent;
 public class ControllerAccueil {
 
 	private Teacher teacher = new Teacher("PERNOT", "Kevin", LocalDate.of(1963, 5, 26), "sae201202IHM", Subject.ALGO);
-	Student AdrienDCV = new FirstYearStudent("DA COSTA VEIGA", "Adrien", LocalDate.of(2003, 5, 25), 1, 'F', 1, null);
-	Student AdrienDGD = new FirstYearStudent("DEGAND", "Adrien", LocalDate.of(2003, 5, 27), 1, 'F', 1, null);
-	Student Etud2 = new SecondYearStudent("ETUD2", "Etud2", LocalDate.of(2002, 5, 25), 2, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>());
-	Student Etud3 = new ThirdYearStudent("ETUD3", "Etud3", LocalDate.of(2001, 5, 27), 3, 'F', Motivation.HIGH_MOTIVATION, 0, new HashMap<Subject, Double>(),false);
+	private final static String PATH = System.getProperty("user.dir") + File.separator + "res" + File.separator + File.separator + "ihm" + File.separator;
 	
 	@FXML Button bProfilAccueil=new Button(); 
 	@FXML Button bListEtudAccueil, bAffectationAccueil, bCandidaturesAccueil, bQuitter;
@@ -40,10 +41,7 @@ public class ControllerAccueil {
 	}
 	
 	public void fillListStudent() {
-		teacher.fillListStudent(AdrienDCV);
-		teacher.fillListStudent(AdrienDGD);
-		teacher.fillListStudent(Etud2);
-		teacher.fillListStudent(Etud3);
+		SaveData.loadData(teacher.getListStudent(), PATH + "scenario1.json");
 	}
 	
 	public void goToProfil(ActionEvent e) throws Exception {
@@ -87,6 +85,7 @@ public class ControllerAccueil {
 	}
 	
 	public void initialize() {
-		fillListStudent();
+		fillListStudent();	
 	}
 }
+

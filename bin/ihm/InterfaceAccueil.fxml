@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.ControllerAccueil">
+   <children>
+      <BorderPane prefHeight="720.0" prefWidth="1280.0">
+         <left>
+            <VBox prefHeight="720.0" prefWidth="125.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="bProfilAcceuil" mnemonicParsing="false" onAction="#goToProfil" prefHeight="50.0" prefWidth="189.0" style="-fx-background-color: darkgrey;" text="Profil">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="bListEtudAccueil" mnemonicParsing="false" onAction="#goToListEtud" prefHeight="50.0" prefWidth="165.0" style="-fx-background-color: darkgrey;" text="Liste étudiants">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="bAffectationAccueil" mnemonicParsing="false" onAction="#goToAffectation" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: darkgrey;" text="Calc. Affec.">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="bCandidaturesAccueil" mnemonicParsing="false" prefHeight="50.0" prefWidth="225.0" style="-fx-background-color: darkgrey;" text="Candidatures">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="bQuitter" mnemonicParsing="false" onAction="#shutDown" prefHeight="50.0" prefWidth="179.0" style="-fx-background-color: darkgrey;" text="Quitter">
+                     <VBox.margin>
+                        <Insets top="420.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <AnchorPane style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" layoutY="335.0" prefHeight="61.0" prefWidth="1153.0" style="-fx-background-color: lightgrey;" text="Bienvenue !">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</Pane>
