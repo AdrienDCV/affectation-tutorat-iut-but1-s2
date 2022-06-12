@@ -85,12 +85,13 @@ public class ControllerAffectationFormulaire3 implements Initializable{
 			SaveData.loadDataArete(listeAretes, PATH+"listeAretes.json");
 			ObservableList<String> obsListAretes = FXCollections.observableArrayList();
 			obsListAretes.addAll(caffect.affect.toStringAretes(listeAretes, teacher));
-			System.out.println(obsListAretes);
 			liste.getItems().removeAll(liste.getItems());
 			liste.setItems(obsListAretes);
 		}
 		
 		public void normalAffectation(List<Student> studentList) {
+			cf1.affect.prepaList(studentList);
+			
 			cf1.affect.prepaList(studentList);
 			cf1.affect.affectation(studentList);
 			

@@ -18,6 +18,7 @@ public class InterfaceGraphique extends Application{
 		Parent root = FXMLLoader.load(getClass().getResource("InterfaceAccueil.fxml"));
 		primaryStage.setTitle("SAE 2.01 + 2.02");
 		primaryStage.setScene(new Scene(root, 1280, 720));
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 	

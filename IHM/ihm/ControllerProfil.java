@@ -19,10 +19,18 @@ public class ControllerProfil {
 	Teacher teacher = ca.getTeacher();
 	
 	@FXML Button bAccueilProfil, bListEtudProfil, bAffectationProfil, bCandidaturesProfil, bQuitter;
-	@FXML Label nameLabel = new Label();
+	@FXML Label nameLabel = new Label(); 
+	@FXML Label forenameLabel= new Label();
+	@FXML Label idLabel= new Label();
+	@FXML Label mailLabel= new Label();
+	@FXML Label subjectLabel= new Label();;
 	
 	public void initData(Teacher teacher) {
 		nameLabel.setText(teacher.getName());
+		forenameLabel.setText(teacher.getForename());
+		idLabel.setText(teacher.getID());
+		mailLabel.setText(teacher.getMail());
+		subjectLabel.setText(teacher.getTeaching().getLabel());
 	}
 	
 	public void goToAccueil() throws Exception {

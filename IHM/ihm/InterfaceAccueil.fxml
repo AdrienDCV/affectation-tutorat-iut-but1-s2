@@ -31,7 +31,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="bAffectationAccueil" mnemonicParsing="false" onAction="#goToAffectation" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: darkgrey;" text="Calc. Affec.">
+                  <Button fx:id="bAffectationAccueil" mnemonicParsing="false" onAction="#goToAffectation" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: darkgrey;" text="Affectation">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
